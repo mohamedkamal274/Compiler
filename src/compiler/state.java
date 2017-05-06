@@ -42,7 +42,7 @@ public class state {
     {
         return errorState;
     }
-
+    
     @Override
     public String toString() {
         return "state{" + "acceptance=" + acceptance + ", nextState=" + nextState.keySet() + '}';

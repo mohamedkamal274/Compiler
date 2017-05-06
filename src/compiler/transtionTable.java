@@ -29,7 +29,11 @@ public class transtionTable {
                 states.get(i).acceptance = true;
             }
         }
-        states.get(stateCount).errorState = true;
+        setErrorState(stateCount);
+    }
+
+    public void setErrorState(int index) {
+        states.get(index).errorState = true;
     }
 
     public Lexeme match(String input) {
@@ -46,18 +50,16 @@ public class transtionTable {
                 line_no += 1;
                 column_no = 1;
             }
-            //System.out.println(ch + "-" + stat.num);
+            System.out.println(ch + "-" + stat.num);
             x += ch;
             if (stat.isAcceptanceState() || stat.isErrorState()) {
                 if (input.length() == counter + 1 || stat.nextState(input.charAt(counter + 1)) == null) {
                     column_no++;
                     System.out.println(x);
                     if (stat.isAcceptanceState()) {
-                        
+
                         return new Lexeme(line_no, x, this.token, columnNo, true);
-                    }
-                    else
-                    {
+                    } else {
                         return new Lexeme(line_no, x, "Not define", columnNo, false);
                     }
                 }
@@ -69,6 +71,7 @@ public class transtionTable {
     }
 
     public void put(int stateNum, Char ch, int nextState) {
+        System.out.println(stateNum + " " + ch + " " + nextState);
         states.get(stateNum).nextState.put(ch, states.get(nextState));
     }
 
@@ -147,25 +150,45 @@ public class transtionTable {
     }
 
     public static transtionTable whiteSpace() {
-        transtionTable whiteSpace = new transtionTable("White Space", 4, 1, 2,3);
+        transtionTable whiteSpace = new transtionTable("White Space", 4, 1, 2, 3);
         Char tab = new Char('\t');
         Char space = new Char(' ');
         Char newline = new Char('\n');
-        whiteSpace.put(0, tab,  1);
-        whiteSpace.put(0, space,  2);
-        whiteSpace.put(0, newline,  3);
-        whiteSpace.put(1, tab,  1);
-        whiteSpace.put(1, space,  2);
-        whiteSpace.put(1, newline,  3);
-        whiteSpace.put(2, tab,  1);
-        whiteSpace.put(2, space,  2);
-        whiteSpace.put(2, newline,  3);
-        whiteSpace.put(3, tab,  1);
-        whiteSpace.put(3, space,  2);
-        whiteSpace.put(3, newline,  3);
+        whiteSpace.put(0, tab, 1);
+        whiteSpace.put(0, space, 2);
+        whiteSpace.put(0, newline, 3);
+        whiteSpace.put(1, tab, 1);
+        whiteSpace.put(1, space, 2);
+        whiteSpace.put(1, newline, 3);
+        whiteSpace.put(2, tab, 1);
+        whiteSpace.put(2, space, 2);
+        whiteSpace.put(2, newline, 3);
+        whiteSpace.put(3, tab, 1);
+        whiteSpace.put(3, space, 2);
+        whiteSpace.put(3, newline, 3);
         return whiteSpace;
     }
-    
+
+    public static transtionTable initString() {
+        transtionTable string = new transtionTable("String", 4, 2);
+        Char doubleQouts = new Char('"');
+        string.put(0, doubleQouts, 1);
+        string.put(1, doubleQouts, 2);
+        string.put(3, doubleQouts, 2);
+        string.put(1, Char.dot, 3);
+        string.put(3, Char.dot, 3);
+        string.setErrorState(3);
+        return string;
+    }
+    public static transtionTable initChar() {
+        transtionTable charFa = new transtionTable("String", 4, 3);
+        Char singleQouts = new Char('\'');
+        charFa.put(0, singleQouts, 1);
+        charFa.put(1, Char.dot, 2);
+        charFa.put(2, singleQouts, 3);
+        charFa.setErrorState(2);
+        return charFa;
+    }
 
     @Override
     public String toString() {

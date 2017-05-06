@@ -13,6 +13,8 @@ public class Lexer {
         tables.add(transtionTable.whiteSpace());
         tables.add(transtionTable.initSingleComment());
         tables.add(transtionTable.initcomment());
+        tables.add(transtionTable.initChar());
+        tables.add(transtionTable.initString());
         tables.addAll(reservedKeywords.keywords());
         tables.add(transtionTable.initDigit());
         tables.add(transtionTable.initIdentifiers());

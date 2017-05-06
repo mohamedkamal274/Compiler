@@ -25,8 +25,10 @@ public class main {
                 + "Ity#x^\n"
                 + "Ity#G() {\n"
                 + "Whatever (counter<num){\n"
-                + "} }} $");
+                + "} }} $"
+                + "x='--sdads'"  );
+        //char t = '--sdadd';
         lex.lexicalAnalyzer().forEach(System.out::println);
-        //System.out.println(transtionTable.initDigit().match("45sdad"));
+        //System.out.println(transtionTable.initChar().match("'9'"));
     }
 }
