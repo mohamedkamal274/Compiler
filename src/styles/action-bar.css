@@ -7,6 +7,6 @@
     -fx-text-fill: -fx-danger-color;
     -fx-background-color: -fx-darker-gray-color;
     -fx-font-size: 15px;
-    -fx-padding: 15px;
+    -fx-padding: 10px 15px;
     -fx-font-family: "Fire Mono Medium";
 }
