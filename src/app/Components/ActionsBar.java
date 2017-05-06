@@ -1,4 +1,4 @@
 package app.Components;
 
-public class Editor {
+public class ActionsBar {
 }
