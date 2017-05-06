@@ -61,11 +61,13 @@ public class reservedKeywords {
         x.put("}", "Braces");
         x.put("[", "Braces");
         x.put("]", "Braces");
+        x.put(")", "Braces");
+        x.put("(", "Braces");
         x.put("->", "Access Operator");
         x.put("=", "Assignment operator");
     }
 
-    public ArrayList<transtionTable> keywords() {
+    public static ArrayList<transtionTable> keywords() {
         ArrayList<transtionTable> transtionTableKeyword = new ArrayList<>();
         ArrayList<String> keys = new ArrayList<>(x.keySet());
         keys.sort(String::compareTo);

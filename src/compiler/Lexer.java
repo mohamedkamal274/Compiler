@@ -8,8 +8,14 @@ public class Lexer {
     ArrayList<transtionTable> tables;
 
     public Lexer(String input) {
-        this.input = Lexer.input;
+        Lexer.input = input;
         tables = new ArrayList<>();
+        tables.add(transtionTable.whiteSpace());
+        tables.add(transtionTable.initSingleComment());
+        tables.add(transtionTable.initcomment());
+        tables.addAll(reservedKeywords.keywords());
+        tables.add(transtionTable.initDigit());
+        tables.add(transtionTable.initIdentifiers());
     }
 
     public void add(transtionTable table) {
@@ -27,13 +33,19 @@ public class Lexer {
     public ArrayList<Lexeme> lexicalAnalyzer() {
         ArrayList<Lexeme> lexemes = new ArrayList<>();
         while (input.length() != 0) {
-            Lexeme lexeme;
+            Lexeme lexeme = null;
             for (transtionTable table : tables) {
                 lexeme = table.match(input);
                 if (lexeme != null) {
                     input = subString(lexeme.getLexeme().length(), input);
                     lexemes.add(lexeme);
+                    break;
                 }
+            }
+            if (lexeme == null) {
+                lexemes.add(new Lexeme(transtionTable.line_no, "Not define", input.charAt(0)+"" , transtionTable.column_no, Boolean.FALSE));
+                transtionTable.column_no++;
+                input = subString(1, input);
             }
         }
         return lexemes;

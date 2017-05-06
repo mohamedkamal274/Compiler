@@ -45,16 +45,20 @@ public class transtionTable {
             if (ch == '\n') {
                 line_no += 1;
                 column_no = 1;
-            } else {
-                column_no++;
             }
-            System.out.println(ch + "-" + stat.num);
+            //System.out.println(ch + "-" + stat.num);
             x += ch;
             if (stat.isAcceptanceState() || stat.isErrorState()) {
                 if (input.length() == counter + 1 || stat.nextState(input.charAt(counter + 1)) == null) {
+                    column_no++;
                     System.out.println(x);
                     if (stat.isAcceptanceState()) {
+                        
                         return new Lexeme(line_no, x, this.token, columnNo, true);
+                    }
+                    else
+                    {
+                        return new Lexeme(line_no, x, "Not define", columnNo, false);
                     }
                 }
             }
@@ -65,7 +69,6 @@ public class transtionTable {
     }
 
     public void put(int stateNum, Char ch, int nextState) {
-        System.out.println(stateNum + " " + ch + " " + nextState);
         states.get(stateNum).nextState.put(ch, states.get(nextState));
     }
 
