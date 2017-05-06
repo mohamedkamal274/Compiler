@@ -16,6 +16,7 @@ import java.util.Map;
  */
 public class state {
     Boolean acceptance = false;
+    Boolean errorState = false;
     HashMap<Char,state> nextState = new LinkedHashMap<>();
     int num;
     public state(int i){
@@ -36,6 +37,10 @@ public class state {
     public Boolean isAcceptanceState()
     {
         return acceptance;
+    }
+    public Boolean isErrorState()
+    {
+        return errorState;
     }
 
     @Override
