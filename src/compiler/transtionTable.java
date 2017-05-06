@@ -107,6 +107,28 @@ public class transtionTable {
         return digit;
     }
 
+    public static transtionTable initSingleComment() {
+        transtionTable comment = new transtionTable("comment", 4, 2, 3);
+        Char dash = new Char('-');
+        comment.put(0, dash, 1);
+        comment.put(1, dash, 2);
+        comment.put(2, Char.dot, 3);
+        comment.put(3, Char.dot, 3);
+        return comment;
+    }
+
+    public static transtionTable initIdentifiers() {
+        transtionTable identifiers = new transtionTable("identifiers", 4, 1, 2, 3);
+        identifiers.put(0, Char.word, 1);
+        identifiers.put(1, Char.word, 2);
+        identifiers.put(1, Char.digit, 3);
+        identifiers.put(2, Char.word, 2);
+        identifiers.put(2, Char.digit, 3);
+        identifiers.put(3, Char.digit, 3);
+        identifiers.put(3, Char.word, 2);
+        return identifiers;
+    }
+
     public static transtionTable reservedWord(String keyword, String token) {
         transtionTable keyWordFa = new transtionTable(token, keyword.length() + 1, keyword.length());
         int counter = 0;
@@ -120,6 +142,27 @@ public class transtionTable {
         }
         return keyWordFa;
     }
+
+    public static transtionTable whiteSpace() {
+        transtionTable whiteSpace = new transtionTable("White Space", 4, 1, 2,3);
+        Char tab = new Char('\t');
+        Char space = new Char(' ');
+        Char newline = new Char('\n');
+        whiteSpace.put(0, tab,  1);
+        whiteSpace.put(0, space,  2);
+        whiteSpace.put(0, newline,  3);
+        whiteSpace.put(1, tab,  1);
+        whiteSpace.put(1, space,  2);
+        whiteSpace.put(1, newline,  3);
+        whiteSpace.put(2, tab,  1);
+        whiteSpace.put(2, space,  2);
+        whiteSpace.put(2, newline,  3);
+        whiteSpace.put(3, tab,  1);
+        whiteSpace.put(3, space,  2);
+        whiteSpace.put(3, newline,  3);
+        return whiteSpace;
+    }
+    
 
     @Override
     public String toString() {
