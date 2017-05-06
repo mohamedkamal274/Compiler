@@ -1,5 +1,6 @@
 package app.Views;
 
+import app.Components.ResultsTable;
 import app.Navigator;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -14,7 +15,7 @@ public class ResultsView {
     private GridPane pageHeaderLayout;
     private Button backButton;
     private Label headline;
-    private TableView resultsTable;
+    private ResultsTable resultsTable;
 
     private ResultsView() {
         this.render();
@@ -37,20 +38,7 @@ public class ResultsView {
         pageHeaderLayout.getChildren().addAll(backButton, headline);
 
         //Results table
-        resultsTable = new TableView();
-        resultsTable.setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
-
-        TableColumn lineNumber = new TableColumn("Line Number");
-        lineNumber.setMaxWidth( 1f * Integer.MAX_VALUE * 15 );
-        TableColumn lexeme = new TableColumn("Lexeme");
-        lexeme.setMaxWidth( 1f * Integer.MAX_VALUE * 23.66666 );
-        TableColumn returnToken = new TableColumn("Return Token");
-        returnToken.setMaxWidth( 1f * Integer.MAX_VALUE * 23.66666 );
-        TableColumn lexemeNumber = new TableColumn("Lexeme Number");
-        lexemeNumber.setMaxWidth( 1f * Integer.MAX_VALUE * 15 );
-        TableColumn matchability = new TableColumn("Matchability");
-        matchability.setMaxWidth( 1f * Integer.MAX_VALUE * 23.66666 );
-        resultsTable.getColumns().addAll(lineNumber, lexeme, returnToken, lexemeNumber, matchability);
+        resultsTable = ResultsTable.getInstance();
 
         //Results layout
         resultsLayout = new BorderPane();
@@ -58,7 +46,7 @@ public class ResultsView {
         resultsLayout.setPadding(new Insets(50, 75, 50, 75));
         resultsLayout.setTop(pageHeaderLayout);
         BorderPane.setMargin(pageHeaderLayout, new Insets(0 , 0, 25, 0));
-        resultsLayout.setCenter(resultsTable);
+        resultsLayout.setCenter(resultsTable.getResultTable());
     }
 
     public BorderPane getResultsView() {
