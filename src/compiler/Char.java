@@ -39,7 +39,7 @@ public class Char {
         }
         return this.ch == ch;
     }
-
+    
     public boolean matchDot(char ch) {
         return (ch != '\n'); 
     }

@@ -20,7 +20,7 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        transtionTable x = transtionTable.reservedWord("Kamal","Class");
-        System.out.println(x.match("Kamalaa"));
+        transtionTable x = transtionTable.whiteSpace(); 
+        System.out.println(x.match("\t \t        \n\n\n"));
     } 
 }
