@@ -1,0 +1,78 @@
+.editor {
+    -fx-font-family: "Fira Mono Medium";
+    -fx-font-size: 14px;
+    -fx-text-fill: #fff;
+    -fx-background-insets: 0;
+    -fx-background-color: #18181C;
+    -fx-border-color: #18181C;
+}
+
+.editor .content,
+.editor:focused .content {
+    -fx-background-color: #18181C;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+}
+
+.editor:focused {
+    -fx-highlight-fill: -fx-primary-color;
+}
+
+.editor .content {
+    -fx-padding: 15px;
+    -fx-highlight-fill: #7ecfff;
+}
+
+/*
+  SCROLLBAR
+ */
+.scrollbar,
+.scrollbar:focused,
+.scrollbar > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scrollbar .corner {
+    visibility: false;
+}
+
+.scroll-bar:vertical .track-background,
+.scroll-bar:horizontal .track-background{
+    -fx-background-color: #18181C;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: rgba(255,255,255, 0.5);
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+    -fx-padding: 0.25em 0.1em  ;
+    -fx-cursor: hand;
+}
+
+.scroll-bar:vertical > .increment-button,
+.scroll-bar:vertical > .decrement-button,
+.scroll-bar:horizontal > .increment-button,
+.scroll-bar:horizontal > .decrement-button{
+    -fx-padding: 0em 0.03em;
+}
+
+.scroll-bar:vertical .thumb:hover,
+.scroll-bar:vertical .thumb:pressed,
+.scroll-bar:horizontal .thumb:hover,
+.scroll-bar:horizontal .thumb:pressed {
+    -fx-background-color: rgba(255,255,255, 0.7);
+}
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button,
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow,
+.scroll-bar:horizontal .increment-button,
+.scroll-bar:horizontal .decrement-button,
+.scroll-bar:horizontal .increment-arrow,
+.scroll-bar:horizontal .decrement-arrow {
+    visibility: false;
+}

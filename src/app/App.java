@@ -1,5 +1,6 @@
 package app;
 
+import app.Views.EditorView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -8,7 +9,8 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
-    public static BorderPane app;
+    private static BorderPane app;
+    private EditorView editorView;
 
     @Override
     public void start(Stage primaryStage) {
@@ -16,9 +18,15 @@ public class App extends Application {
         app = new BorderPane();
         app.addEventFilter(MouseEvent.MOUSE_PRESSED, mouseEvent -> app.requestFocus());
 
+        editorView = EditorView.getInstance();
+        app.setCenter(editorView.getEditorLayout());
+
         //App Scene
         Scene scene = new Scene(app, 1200, 600);
+        scene.getStylesheets().add("/styles/buttons.css");
+        scene.getStylesheets().add("/styles/colors.css");
         scene.getStylesheets().add("/styles/editor.css");
+        scene.getStylesheets().add("/styles/results-table.css");
 
         primaryStage.setTitle("Compiler Editor");
         primaryStage.setMinWidth(1200);
