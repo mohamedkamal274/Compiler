@@ -1,81 +1,55 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package compiler;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import javafx.print.Collation;
 
-/**
- *
- * @author mohamedkamal
- */
 public class Lexer {
-    static HashMap<String, String> x = new HashMap<>();
-    public static void initilize(){
-        x.put("Pattern", "Class");
-        x.put("DerivedFrom", "Inheritance");
-        x.put("TrueFor", "Condition");
-        x.put("Else", "Condition");
-        x.put("Ity", "Integer");
-        x.put("Sity", "SInteger");
-        x.put("Cwq", "Character");
-        x.put("CwqSequence", "String");
-        x.put("Ifity", "Float");
-        x.put("Sifity", "SFloat");
-        x.put("Valueless", "Void");
-        x.put("Logical", "Boolean");
-        x.put("BreakFromThis", "Break");
-        x.put("Whatever", "Loop");
-        x.put("Respondwith", "Return");
-        x.put("Srap", "Struct");
-        x.put("Scan", "Switch");
-        x.put("Conditionof", "Switch");
-        x.put("@", "Stat Symbol");
-        x.put("$", "End Symbol");
-        x.put("+", "Arithmetic Operation");
-        x.put("-", "Arithmetic Operation");
-        x.put("*", "Arithmetic Operation");
-        x.put("/", "Arithmetic Operation");        
-        x.put("&&", "Logic operators");        
-        x.put("||", "Logic operators");        
-        x.put("~", "Logic operators");     
-        x.put("==", "relational operators");        
-        x.put("<", "relational operators");        
-        x.put(">", "relational operators");        
-        x.put("!=", "relational operators");        
-        x.put("<=", "relational operators");        
-        x.put(">=", "relational operators");               
-        x.put("^","Line Delimiter");
-        x.put("#","Token Delimiter");
-        x.put("--", "Comment");
-        x.put("-/", "Comment");
-        x.put("/- ", "Comment");
-        x.put("Require", "Inclusion");
-        x.put("{", "Braces");
-        x.put("}", "Braces");
-        x.put("[", "Braces");
-        x.put("]", "Braces");
-        x.put("->", "Access Operator");
-        x.put("=","Assignment operator");
+
+    static String input;
+    ArrayList<transtionTable> tables;
+
+    public Lexer(String input) {
+        Lexer.input = input;
+        tables = new ArrayList<>();
+        tables.add(transtionTable.whiteSpace());
+        tables.add(transtionTable.initSingleComment());
+        tables.add(transtionTable.initcomment());
+        tables.add(transtionTable.initChar());
+        tables.add(transtionTable.initString());
+        tables.addAll(reservedKeywords.keywords());
+        tables.add(transtionTable.initDigit());
+        tables.add(transtionTable.initIdentifiers());
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        /*initilize();
-        ArrayList<String> z = new ArrayList<>(x.keySet());
-        z.sort(String::compareTo);
-        Collections.reverse(z);
-        transtionTable x = new transtionTable("$", "d");
-        System.out.println(x.match("$"));*/
-        transtionTable x = transtionTable.initcomment();
-        System.out.println(x.match("/-aa-/aa-/-/-/"));
-    } 
+
+    public void add(transtionTable table) {
+        tables.add(table);
+    }
+
+    public String subString(int start, String text) {
+        String subText = "";
+        for (int i = start; i < text.length(); i++) {
+            subText += text.charAt(i);
+        }
+        return subText;
+    }
+
+    public ArrayList<Lexeme> lexicalAnalyzer() {
+        ArrayList<Lexeme> lexemes = new ArrayList<>();
+        while (input.length() != 0) {
+            Lexeme lexeme = null;
+            for (transtionTable table : tables) {
+                lexeme = table.match(input);
+                if (lexeme != null) {
+                    input = subString(lexeme.getLexeme().length(), input);
+                    lexemes.add(lexeme);
+                    break;
+                }
+            }
+            if (lexeme == null) {
+                lexemes.add(new Lexeme(transtionTable.line_no, "Not define", input.charAt(0)+"" , transtionTable.column_no, Boolean.FALSE));
+                transtionTable.column_no++;
+                input = subString(1, input);
+            }
+        }
+        return lexemes;
+    }
 }
