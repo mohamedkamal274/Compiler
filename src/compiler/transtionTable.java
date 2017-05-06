@@ -65,11 +65,10 @@ public class transtionTable {
     }
 
     public void put(int stateNum, Char ch, int nextState) {
+        System.out.println(stateNum + " " + ch + " " + nextState);
         states.get(stateNum).nextState.put(ch, states.get(nextState));
     }
 
-    ;
-    
     public static transtionTable initcomment() {
         Char dot = Char.dot;
         Char slash = new Char('/');
@@ -107,4 +106,24 @@ public class transtionTable {
         digit.put(4, Char.digit, 4);
         return digit;
     }
+
+    public static transtionTable reservedWord(String keyword, String token) {
+        transtionTable keyWordFa = new transtionTable(token, keyword.length() + 1, keyword.length());
+        int counter = 0;
+        for (char ch : keyword.toCharArray()) {
+            keyWordFa.put(counter, new Char(ch), counter + 1);
+            counter++;
+        }
+        if (Char.word.match(keyword.charAt(0))) {
+            keyWordFa.put(counter, Char.word, counter + 1);
+            keyWordFa.put(counter + 1, Char.word, counter + 1);
+        }
+        return keyWordFa;
+    }
+
+    @Override
+    public String toString() {
+        return "transtionTable{" + "states=" + states + ", token=" + token + '}';
+    }
+
 }
