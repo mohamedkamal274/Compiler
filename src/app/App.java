@@ -1,6 +1,7 @@
 package app;
 
 import app.Views.EditorView;
+import app.Views.ResultsView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -11,6 +12,7 @@ public class App extends Application {
 
     private static BorderPane app;
     private EditorView editorView;
+    private ResultsView resultsView;
 
     @Override
     public void start(Stage primaryStage) {
@@ -19,6 +21,7 @@ public class App extends Application {
         app.addEventFilter(MouseEvent.MOUSE_PRESSED, mouseEvent -> app.requestFocus());
 
         editorView = EditorView.getInstance();
+        resultsView = ResultsView.getInstance();
         app.setCenter(editorView.getEditorLayout());
 
         //App Scene
@@ -36,6 +39,10 @@ public class App extends Application {
         primaryStage.setScene(scene);
         //primaryStage.getIcons().add(new Image("/assets/app-logo.png"));
         primaryStage.show();
+    }
+
+    public static BorderPane getApp() {
+        return app;
     }
 
     /**
