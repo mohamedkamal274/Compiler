@@ -1,10 +1,14 @@
+root {
+    -fx-background-color: #fff;
+}
+
 .back-btn {
     -fx-cursor: hand;
-    -fx-min-height: 40px;
-    -fx-max-height: 40px;
-    -fx-min-width: 40px;
-    -fx-max-width: 40px;
-    -fx-background-size: 32px;
+    -fx-min-height: 32px;
+    -fx-max-height: 32px;
+    -fx-min-width: 32px;
+    -fx-max-width: 32px;
+    -fx-background-size: 20px;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
     -fx-background-color: transparent;
@@ -14,4 +18,42 @@
 .back-btn:hover {
     -fx-background-color: -fx-primary-color;
     -fx-background-image: url("../assets/left-arrow-hover.png");;
+}
+
+.headline {
+    -fx-font-family: NotoSans;
+    -fx-font-size: 24px;
+    -fx-text-fill: -fx-darker-gray-color;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-width: 1px;
+    -fx-border-color: #c1c7cd;
+}
+
+.table-view:focused {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+    -fx-min-height: 50px;
+}
+
+.table-view .column-header-background .label {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-dark-gray-color;
+    -fx-font-size: 15px;
+    -fx-font-family: NotoSans;
+    -fx-font-weight: 500;
+    -fx-padding: 12px;
+    -fx-text-alignment: center;
+    -fx-cursor: hand;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #c1c7cd transparent;
+    -fx-border-width: 1px;
 }
