@@ -2,3 +2,11 @@
     -fx-background-color: -fx-darker-gray-color;
     -fx-border-color: rgba(255, 255, 255, 0.4) transparent transparent transparent;
 }
+
+.error-message {
+    -fx-text-fill: -fx-danger-color;
+    -fx-background-color: -fx-darker-gray-color;
+    -fx-font-size: 15px;
+    -fx-padding: 15px;
+    -fx-font-family: "Fire Mono Medium";
+}
