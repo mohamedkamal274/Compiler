@@ -27,6 +27,7 @@ public class App extends Application {
         scene.getStylesheets().add("/styles/colors.css");
         scene.getStylesheets().add("/styles/editor.css");
         scene.getStylesheets().add("/styles/results-table.css");
+        scene.getStylesheets().add("/styles/action-bar.css");
 
         primaryStage.setTitle("Compiler Editor");
         primaryStage.setMinWidth(1200);

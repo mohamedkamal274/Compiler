@@ -1,0 +1,4 @@
+.action-bar {
+    -fx-background-color: -fx-darker-gray-color;
+    -fx-border-color: rgba(255, 255, 255, 0.4) transparent transparent transparent;
+}

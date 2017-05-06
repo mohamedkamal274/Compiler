@@ -1,0 +1,16 @@
+.btn {
+    -fx-border-radius: 0;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-color: transparent;
+    -fx-padding: 10px 24px;
+    -fx-font-family: NotoSans;
+    -fx-font-size: 15px;
+    -fx-text-fill: #fff;
+    -fx-cursor: hand;
+    -fx-background-radius: 0;
+}
+
+.btn:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.4);
+}
