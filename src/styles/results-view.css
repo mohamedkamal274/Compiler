@@ -1,0 +1,17 @@
+.back-btn {
+    -fx-cursor: hand;
+    -fx-min-height: 40px;
+    -fx-max-height: 40px;
+    -fx-min-width: 40px;
+    -fx-max-width: 40px;
+    -fx-background-size: 32px;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+    -fx-background-image: url("../assets/left-arrow.png");;
+}
+
+.back-btn:hover {
+    -fx-background-color: -fx-primary-color;
+    -fx-background-image: url("../assets/left-arrow-hover.png");;
+}

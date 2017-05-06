@@ -5,10 +5,11 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Region;
 import javafx.util.Duration;
 
 public class Animations {
-    static void fadeOutThenSlideUp(BorderPane parent, BorderPane tab, BorderPane page) {
+    static void fadeOutThenSlideUp(BorderPane parent, Region tab, Region page) {
         Timeline fadeOutThenSlideUpAnimation = new Timeline();
 
         //Creating all key values for the animation
@@ -41,7 +42,7 @@ public class Animations {
         fadeOutThenSlideUpAnimation.play();
     }
 
-    static void slideDownThenFadeIn(BorderPane parent, BorderPane page, BorderPane tab) {
+    static void slideDownThenFadeIn(BorderPane parent, Region page, Region tab) {
         Timeline slideDownThenFadeInAnimation = new Timeline();
 
         //Creating all key values for the animation
