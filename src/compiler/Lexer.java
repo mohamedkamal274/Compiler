@@ -24,7 +24,7 @@ public class Lexer {
         return subText;
     }
 
-    public ArrayList<Lexeme> lexerAnlyzer() {
+    public ArrayList<Lexeme> lexicalAnalyzer() {
         ArrayList<Lexeme> lexemes = new ArrayList<>();
         while (input.length() != 0) {
             Lexeme lexeme;
