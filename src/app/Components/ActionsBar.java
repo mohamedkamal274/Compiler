@@ -1,11 +1,12 @@
 package app.Components;
 
-import app.App;
 import app.Navigator;
 import app.Views.ScannerResultsView;
+import compiler.Lexeme;
 import compiler.Lexer;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -14,11 +15,16 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 
 public class ActionsBar {
+
+    private ArrayList<TableColumn> scanner;
+    private ArrayList<TableColumn> parser;
 
     private static ActionsBar instance;
     private BorderPane actionBarLayout;
@@ -39,6 +45,44 @@ public class ActionsBar {
     }
 
     private void render() {
+        //scanner
+        scanner = new ArrayList<>();
+        TableColumn<Lexeme, Integer> lineNumber = new TableColumn("Line Number");
+        lineNumber.setMaxWidth(1f * Integer.MAX_VALUE * 15);
+        lineNumber.setCellValueFactory(new PropertyValueFactory<>("line_no"));
+        scanner.add(lineNumber);
+        TableColumn<Lexeme, String> lexeme = new TableColumn("Lexeme");
+        lexeme.setMaxWidth(1f * Integer.MAX_VALUE * 23.66666);
+        lexeme.setCellValueFactory(new PropertyValueFactory<>("lexeme"));
+        scanner.add(lexeme);
+        TableColumn<Lexeme, String> returnToken = new TableColumn("Return Token");
+        returnToken.setMaxWidth(1f * Integer.MAX_VALUE * 23.66666);
+        returnToken.setCellValueFactory(new PropertyValueFactory<>("token"));
+        scanner.add(returnToken);
+        TableColumn<Lexeme, Integer> lexemeNumber = new TableColumn("Lexeme Number");
+        lexemeNumber.setMaxWidth(1f * Integer.MAX_VALUE * 15);
+        lexemeNumber.setCellValueFactory(new PropertyValueFactory<>("lexeme_pos"));
+        scanner.add(lexemeNumber);
+        TableColumn<Lexeme, Boolean> matchability = new TableColumn("Matchability");
+        matchability.setMaxWidth(1f * Integer.MAX_VALUE * 23.66666);
+        matchability.setCellValueFactory(new PropertyValueFactory<>("matched"));
+        scanner.add(matchability);
+
+        //parser
+        parser = new ArrayList<>();
+        TableColumn<DummyClass, Integer> parserlineNumber = new TableColumn("Line Number");
+        parserlineNumber.setMaxWidth(1f * Integer.MAX_VALUE * 15);
+        parserlineNumber.setCellValueFactory(new PropertyValueFactory<>("lineNo"));
+        parser.add(parserlineNumber);
+        TableColumn<DummyClass, Boolean> parserMatchability = new TableColumn("Matchability");
+        parserMatchability.setMaxWidth(1f * Integer.MAX_VALUE * 23.66666);
+        parserMatchability.setCellValueFactory(new PropertyValueFactory<>("matchability"));
+        parser.add(parserMatchability);
+        TableColumn<DummyClass, String> role = new TableColumn("Rule Used");
+        role.setMaxWidth(1f * Integer.MAX_VALUE * 23.66666);
+        role.setCellValueFactory(new PropertyValueFactory<>("role"));
+        parser.add(role);
+
         //Error Message
         errorMessage = new Label();
         errorMessage.getStyleClass().add("error-message");
@@ -59,9 +103,7 @@ public class ActionsBar {
         parseButton = new Button("Parse");
         parseButton.getStyleClass().add("btn");
 
-        parseButton.setOnAction(e -> {
-            //TODO
-        });
+        parseButton.setOnAction(this::parse);
 
         compileButton = new Button("Compile");
         compileButton.getStyleClass().add("btn");
@@ -73,7 +115,7 @@ public class ActionsBar {
         browseButton = new Button("Browse");
         browseButton.getStyleClass().add("btn");
         browseButton.setOnAction(this::browse);
-        
+
         //Buttons layout
         buttonsLayout = new GridPane();
         buttonsLayout.setAlignment(Pos.CENTER_RIGHT);
@@ -91,12 +133,17 @@ public class ActionsBar {
         actionBarLayout.setLeft(errorMessageScroll);
     }
 
+    private void parse(ActionEvent e) {
+        ScannerResultsView.getInstance().setData(parser, DummyClass.getDummyData());
+        Navigator.viewPage();
+    }
+
     private void scan(ActionEvent e) {
         if (!fileExist) {
             fileContent = Editor.getInstance().getEditor().getText();
         }
         lexer.setInput(fileContent);
-        ScannerResultsView.getInstance().setData(
+        ScannerResultsView.getInstance().setData(scanner,
                 lexer.lexicalAnalyzer()
                         .parallelStream()
                         .filter(lexeme -> !lexeme.getToken().equals("White Space"))
@@ -115,7 +162,7 @@ public class ActionsBar {
         //Clearing if there is an existing file
         fileExist = false;
         FileChooser openFile = new FileChooser();
-        openFile .setTitle("Choose code file");
+        openFile.setTitle("Choose code file");
         File file = openFile.showOpenDialog(null);
         if (file != null) {
             try {

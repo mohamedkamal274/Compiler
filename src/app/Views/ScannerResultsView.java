@@ -2,7 +2,6 @@ package app.Views;
 
 import app.Components.ResultsTable;
 import app.Navigator;
-import compiler.Lexeme;
 import java.util.List;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -64,7 +63,9 @@ public class ScannerResultsView {
         return resultsLayout;
     }
 
-    public void setData(List<Lexeme> Lexemes) {
+    public void setData(List<TableColumn> columns, List<Object> Lexemes) {
+        resultsTable.getResultTable().getColumns().clear();
+        resultsTable.getResultTable().getColumns().addAll(columns);
         resultsTable.getResultTable().getItems().clear();
         resultsTable.getResultTable().getItems().addAll(Lexemes);
     }
