@@ -15,6 +15,13 @@ root {
     -fx-background-image: url("../assets/left-arrow.png");;
 }
 
+.error-number {
+    -fx-text-fill: -fx-danger-color;
+    -fx-font-size: 20px;
+    -fx-font-family: "Noto Sans";
+    -fx-font-weight: 500;
+}
+
 .back-btn:hover {
     -fx-background-color: -fx-primary-color;
     -fx-background-image: url("../assets/left-arrow-hover.png");;
