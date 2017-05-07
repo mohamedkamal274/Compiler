@@ -16,6 +16,7 @@ public class ActionsBar {
     private Button scanButton;
     private Button parseButton;
     private Button compileButton;
+    private Button browseButton;
 
     private ActionsBar() {
         this.render();
@@ -34,9 +35,18 @@ public class ActionsBar {
 
         parseButton = new Button("Parse");
         parseButton.getStyleClass().add("btn");
+        
+        parseButton.setOnAction(e -> { //TODO });
 
         compileButton = new Button("Compile");
         compileButton.getStyleClass().add("btn");
+            
+        compileButton.setOnAction(e -> { //TODO });
+        
+        browseButton = new Button("Browse");
+        browseButton.getStyleClass().add("btn");
+            
+        browseButton.setOnAction(e -> { //TODO });
 
         //Buttons layout
         buttonsLayout = new GridPane();
@@ -44,7 +54,8 @@ public class ActionsBar {
         GridPane.setConstraints(scanButton, 0, 0);
         GridPane.setConstraints(parseButton, 1, 0);
         GridPane.setConstraints(compileButton, 2, 0);
-        buttonsLayout.getChildren().addAll(scanButton, parseButton, compileButton);
+        GridPane.setConstraints(browseButton, 3, 0);
+        buttonsLayout.getChildren().addAll(scanButton, parseButton, compileButton, browseButton);
 
         //Action bar layout
         actionBarLayout = new BorderPane();
