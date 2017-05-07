@@ -26,7 +26,6 @@ public class ActionsBar {
     private Button parseButton;
     private Button compileButton;
     private Button browseButton;
-    private Button clearBrowseButton;
 
     private String fileContent = "";
     private boolean fileExist = false;
@@ -45,7 +44,7 @@ public class ActionsBar {
         scanButton = new Button("Scan");
         scanButton.getStyleClass().add("btn");
 
-        scanButton.setOnAction(this::scanButtonAction);
+        scanButton.setOnAction(this::scan);
 
         parseButton = new Button("Parse");
         parseButton.getStyleClass().add("btn");
@@ -63,13 +62,7 @@ public class ActionsBar {
 
         browseButton = new Button("Browse");
         browseButton.getStyleClass().add("btn");
-        browseButton.setOnAction(this::browseButtonAction);
-
-        clearBrowseButton = new Button("Clear browse");
-        clearBrowseButton.getStyleClass().add("btn");
-        clearBrowseButton.setDisable(true);
-        clearBrowseButton.setOnAction(this::clearBrowseButtonAction);
-
+        browseButton.setOnAction(this::browse);
         
         //Buttons layout
         buttonsLayout = new GridPane();
@@ -78,8 +71,7 @@ public class ActionsBar {
         GridPane.setConstraints(parseButton, 1, 0);
         GridPane.setConstraints(compileButton, 2, 0);
         GridPane.setConstraints(browseButton, 3, 0);
-        GridPane.setConstraints(clearBrowseButton, 4, 0);
-        buttonsLayout.getChildren().addAll(scanButton, parseButton, compileButton, browseButton, clearBrowseButton);
+        buttonsLayout.getChildren().addAll(scanButton, parseButton, compileButton, browseButton);
 
         //Action bar layout
         actionBarLayout = new BorderPane();
@@ -88,7 +80,7 @@ public class ActionsBar {
         actionBarLayout.setLeft(errorMessage);
     }
 
-    private void scanButtonAction(ActionEvent e) {
+    private void scan(ActionEvent e) {
         if (!fileExist) {
             fileContent = Editor.getInstance().getEditor().getText();
         }
@@ -108,7 +100,9 @@ public class ActionsBar {
         Navigator.viewPage();
     }
 
-    private void browseButtonAction(ActionEvent e) {
+    private void browse(ActionEvent e) {
+        //Clearing if there is an existing file
+        fileExist = false;
         FileChooser openFile = new FileChooser();
         openFile .setTitle("Choose code file");
         File file = openFile.showOpenDialog(null);
@@ -119,19 +113,9 @@ public class ActionsBar {
                 Logger.getGlobal().log(Level.SEVERE, ex.getMessage(), ex);
             }
             fileExist = true;
-            clearBrowseButton.setText("Clear browse"+ " ("+file.getPath()+")");
-            clearBrowseButton.setDisable(false);
         } else {
             fileExist = false;
-            clearBrowseButton.setText("Clear browse");
-            clearBrowseButton.setDisable(true);
         }
-    }
-
-    private void clearBrowseButtonAction(ActionEvent e) {
-        fileExist = false;
-        clearBrowseButton.setText("Clear browse");
-        clearBrowseButton.setDisable(true);
     }
 
     public void setErrorMessage(String errorMessage) {
