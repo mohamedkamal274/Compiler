@@ -20,11 +20,12 @@ public class Lexer {
         tables.add(transtionTable.initIdentifiers());
     }
 
-    public void setInput(String Input){
+    public void setInput(String Input) {
         Lexer.input = Input;
         transtionTable.column_no = 1;
         transtionTable.line_no = 1;
     }
+
     public void add(transtionTable table) {
         tables.add(table);
     }
@@ -50,11 +51,25 @@ public class Lexer {
                 }
             }
             if (lexeme == null) {
-                lexemes.add(new Lexeme(transtionTable.line_no, "Not define", input.charAt(0)+"" , transtionTable.column_no, Boolean.FALSE));
+                lexemes.add(new Lexeme(transtionTable.line_no, input.charAt(0)+"" ,"Not define" , transtionTable.column_no, Boolean.FALSE));
                 transtionTable.column_no++;
                 input = subString(1, input);
+            } else if (this.equal(lexeme.getToken(),"White Space")) {
+                transtionTable.column_no--;
             }
         }
         return lexemes;
+    }
+
+    public boolean equal(String x1, String x2) {
+        if (x1.length() != x2.length()) {
+            return false;
+        }
+        for (int i = 0; i < x1.length(); i++) {
+            if (x1.charAt(i) != x2.charAt(i)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
