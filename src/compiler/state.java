@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package compiler;
 
 import java.util.ArrayList;
@@ -10,23 +5,19 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- *
- * @author mohamedkamal
- */
-public class state {
+public class State {
     Boolean acceptance = false;
     Boolean errorState = false;
-    HashMap<Char,state> nextState = new LinkedHashMap<>();
+    HashMap<Char,State> nextState = new LinkedHashMap<>();
     int num;
-    public state(int i){
+    public State(int i){
         num = i;
     }
-    public state nextState(char ch)
+    public State nextState(char ch)
     {
-        for (Map.Entry<Char, state> entry : nextState.entrySet()) {
+        for (Map.Entry<Char, State> entry : nextState.entrySet()) {
             Char key = entry.getKey();
-            state value = entry.getValue();
+            State value = entry.getValue();
             if (key.match(ch))
             {
                 return value;

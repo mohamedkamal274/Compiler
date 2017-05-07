@@ -1,30 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package compiler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
-/**
- *
- * @author mohamedkamal
- */
-public class transtionTable {
+public class TranstionTable {
 
-    private ArrayList<state> states = new ArrayList<>();
+    private ArrayList<State> states = new ArrayList<>();
     private String token;
     static int line_no = 1;
     static int column_no = 1;
 
-    public transtionTable(String token, int stateCount, int... acceptState) {
+    public TranstionTable(String token, int stateCount, int... acceptState) {
         this.token = token;
         Arrays.sort(acceptState);
         for (int i = 0; i <= stateCount; i++) {
-            states.add(new state(i));
+            states.add(new State(i));
             if (Arrays.binarySearch(acceptState, i) >= 0) {
                 states.get(i).acceptance = true;
             }
@@ -37,7 +27,7 @@ public class transtionTable {
     }
 
     public Lexeme match(String input) {
-        state stat = states.get(0);
+        State stat = states.get(0);
         int columnNo = column_no;
         String x = "";
         int counter = 0;
@@ -50,12 +40,12 @@ public class transtionTable {
                 line_no += 1;
                 column_no = 1;
             }
-            System.out.println(ch + "-" + stat.num);
+            //System.out.println(ch + "-" + stat.num);
             x += ch;
             if (stat.isAcceptanceState() || stat.isErrorState()) {
                 if (input.length() == counter + 1 || stat.nextState(input.charAt(counter + 1)) == null) {
                     column_no++;
-                    System.out.println(x);
+                    //System.out.println(x);
                     if (stat.isAcceptanceState()) {
 
                         return new Lexeme(line_no, x, this.token, columnNo, true);
@@ -66,21 +56,21 @@ public class transtionTable {
             }
             counter++;
         }
-        System.out.println(x);
+        //System.out.println(x);
         return null;
     }
 
     public void put(int stateNum, Char ch, int nextState) {
-        System.out.println(stateNum + " " + ch + " " + nextState);
+        //System.out.println(stateNum + " " + ch + " " + nextState);
         states.get(stateNum).nextState.put(ch, states.get(nextState));
     }
 
-    public static transtionTable initcomment() {
+    public static TranstionTable initcomment() {
         Char dot = Char.dot;
         Char slash = new Char('/');
         Char dash = new Char('-');
         Char newline = new Char('\n');
-        transtionTable comment = new transtionTable("comment", 7, 6);
+        TranstionTable comment = new TranstionTable("comment", 7, 6);
         comment.put(0, slash, 1);
         comment.put(1, dash, 2);
         comment.put(2, dash, 3);
@@ -98,8 +88,8 @@ public class transtionTable {
         return comment;
     }
 
-    public static transtionTable initDigit() {
-        transtionTable digit = new transtionTable("digit", 4, 1, 3);
+    public static TranstionTable initDigit() {
+        TranstionTable digit = new TranstionTable("digit", 4, 1, 3);
         Char digitChar = Char.digit;
         digit.put(0, digitChar, 1);
         digit.put(1, digitChar, 1);
@@ -113,8 +103,8 @@ public class transtionTable {
         return digit;
     }
 
-    public static transtionTable initSingleComment() {
-        transtionTable comment = new transtionTable("comment", 4, 2, 3);
+    public static TranstionTable initSingleComment() {
+        TranstionTable comment = new TranstionTable("comment", 4, 2, 3);
         Char dash = new Char('-');
         comment.put(0, dash, 1);
         comment.put(1, dash, 2);
@@ -123,8 +113,8 @@ public class transtionTable {
         return comment;
     }
 
-    public static transtionTable initIdentifiers() {
-        transtionTable identifiers = new transtionTable("identifiers", 4, 1, 2, 3);
+    public static TranstionTable initIdentifiers() {
+        TranstionTable identifiers = new TranstionTable("identifiers", 4, 1, 2, 3);
         identifiers.put(0, Char.word, 1);
         identifiers.put(1, Char.word, 2);
         identifiers.put(1, Char.digit, 3);
@@ -135,8 +125,8 @@ public class transtionTable {
         return identifiers;
     }
 
-    public static transtionTable reservedWord(String keyword, String token) {
-        transtionTable keyWordFa = new transtionTable(token, keyword.length() + 1, keyword.length());
+    public static TranstionTable reservedWord(String keyword, String token) {
+        TranstionTable keyWordFa = new TranstionTable(token, keyword.length() + 1, keyword.length());
         int counter = 0;
         for (char ch : keyword.toCharArray()) {
             keyWordFa.put(counter, new Char(ch), counter + 1);
@@ -149,8 +139,8 @@ public class transtionTable {
         return keyWordFa;
     }
 
-    public static transtionTable whiteSpace() {
-        transtionTable whiteSpace = new transtionTable("White Space", 4, 1, 2, 3);
+    public static TranstionTable whiteSpace() {
+        TranstionTable whiteSpace = new TranstionTable("White Space", 4, 1, 2, 3);
         Char tab = new Char('\t');
         Char space = new Char(' ');
         Char newline = new Char('\n');
@@ -169,8 +159,8 @@ public class transtionTable {
         return whiteSpace;
     }
 
-    public static transtionTable initString() {
-        transtionTable string = new transtionTable("String", 4, 2);
+    public static TranstionTable initString() {
+        TranstionTable string = new TranstionTable("String", 4, 2);
         Char doubleQouts = new Char('"');
         string.put(0, doubleQouts, 1);
         string.put(1, doubleQouts, 2);
@@ -180,8 +170,8 @@ public class transtionTable {
         string.setErrorState(3);
         return string;
     }
-    public static transtionTable initChar() {
-        transtionTable charFa = new transtionTable("String", 4, 3);
+    public static TranstionTable initChar() {
+        TranstionTable charFa = new TranstionTable("String", 4, 3);
         Char singleQouts = new Char('\'');
         charFa.put(0, singleQouts, 1);
         charFa.put(1, Char.dot, 2);
