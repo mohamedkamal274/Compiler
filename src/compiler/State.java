@@ -1,6 +1,5 @@
 package compiler;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -33,11 +32,10 @@ public class State {
     {
         return errorState;
     }
-    
+
     @Override
     public String toString() {
         return "state{" + "acceptance=" + acceptance + ", nextState=" + nextState.keySet() + '}';
     }
-    
-}
 
+}
