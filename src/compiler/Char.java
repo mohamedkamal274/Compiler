@@ -39,13 +39,13 @@ public class Char {
         }
         return this.ch == ch;
     }
-
+    
     public boolean matchDot(char ch) {
         return (ch != '\n'); 
     }
 
     public boolean matchWord(char ch) {
-        return ((ch >= 'A' && ch <= 'Z') || (ch >= 'A' && ch <= 'Z') || ch == '_');
+        return ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || ch == '_');
     }
 
     public boolean matchDigit(char ch) {

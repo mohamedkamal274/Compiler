@@ -76,3 +76,4 @@ build.xml
 manifest.mf
 *.iml
 *.psd
+/richtextfx-fat-0.6.10.jar
