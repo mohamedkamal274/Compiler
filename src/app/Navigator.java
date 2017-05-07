@@ -1,7 +1,7 @@
 package app;
 
 import app.Views.EditorView;
-import app.Views.ResultsView;
+import app.Views.ScannerResultsView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 
@@ -15,7 +15,7 @@ public class Navigator {
         if (viewCode == Partials.EDITOR_VIEW)
             return EditorView.getInstance().getEditorLayout();
         else
-            return ResultsView.getInstance().getResultsView();
+            return ScannerResultsView.getInstance().getResultsView();
     }
 
     public static void viewPage() {

@@ -33,6 +33,7 @@
 }
 
 .scrollbar .corner {
+    -fx-background-color: transparent;
     visibility: false;
 }
 

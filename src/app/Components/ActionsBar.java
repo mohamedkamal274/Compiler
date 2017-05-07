@@ -1,7 +1,8 @@
 package app.Components;
 
+import app.App;
 import app.Navigator;
-import app.Views.ResultsView;
+import app.Views.ScannerResultsView;
 import compiler.Lexer;
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
@@ -21,6 +23,7 @@ public class ActionsBar {
     private static ActionsBar instance;
     private BorderPane actionBarLayout;
     private GridPane buttonsLayout;
+    private ScrollPane errorMessageScroll;
     private Label errorMessage;
     private Button scanButton;
     private Button parseButton;
@@ -37,8 +40,15 @@ public class ActionsBar {
 
     private void render() {
         //Error Message
-        errorMessage = new Label("1 error, at line 2");
+        errorMessage = new Label();
         errorMessage.getStyleClass().add("error-message");
+
+        errorMessageScroll = new ScrollPane(errorMessage);
+        errorMessageScroll.setMinWidth(700);
+        errorMessageScroll.setMaxWidth(1000);
+        errorMessageScroll.setMaxHeight(75);
+        errorMessageScroll.getStyleClass().add("scrollbar");
+        errorMessageScroll.toBack();
 
         //Buttons
         scanButton = new Button("Scan");
@@ -67,6 +77,7 @@ public class ActionsBar {
         //Buttons layout
         buttonsLayout = new GridPane();
         buttonsLayout.setAlignment(Pos.CENTER_RIGHT);
+        buttonsLayout.setMaxWidth(370);
         GridPane.setConstraints(scanButton, 0, 0);
         GridPane.setConstraints(parseButton, 1, 0);
         GridPane.setConstraints(compileButton, 2, 0);
@@ -77,7 +88,7 @@ public class ActionsBar {
         actionBarLayout = new BorderPane();
         actionBarLayout.getStyleClass().add("action-bar");
         actionBarLayout.setRight(buttonsLayout);
-        actionBarLayout.setLeft(errorMessage);
+        actionBarLayout.setLeft(errorMessageScroll);
     }
 
     private void scan(ActionEvent e) {
@@ -85,7 +96,7 @@ public class ActionsBar {
             fileContent = Editor.getInstance().getEditor().getText();
         }
         lexer.setInput(fileContent);
-        ResultsView.getInstance().setData(
+        ScannerResultsView.getInstance().setData(
                 lexer.lexicalAnalyzer()
                         .parallelStream()
                         .filter(lexeme -> !lexeme.getToken().equals("White Space"))

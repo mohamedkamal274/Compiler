@@ -9,16 +9,16 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
-public class ResultsView {
+public class ScannerResultsView {
 
-    private static ResultsView instance;
+    private static ScannerResultsView instance;
     private BorderPane resultsLayout;
     private GridPane pageHeaderLayout;
     private Button backButton;
     private Label headline;
     private ResultsTable resultsTable;
 
-    private ResultsView() {
+    private ScannerResultsView() {
         this.render();
     }
 
@@ -59,9 +59,9 @@ public class ResultsView {
         resultsTable.getResultTable().getItems().addAll(Lexemes);
     }
 
-    public static ResultsView getInstance() {
+    public static ScannerResultsView getInstance() {
         if (instance == null) {
-            instance = new ResultsView();
+            instance = new ScannerResultsView();
         }
         return instance;
     }
