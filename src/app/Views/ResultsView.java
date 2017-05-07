@@ -2,7 +2,8 @@ package app.Views;
 
 import app.Components.ResultsTable;
 import app.Navigator;
-import javafx.collections.ObservableList;
+import compiler.Lexeme;
+import java.util.List;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -45,7 +46,7 @@ public class ResultsView {
         resultsLayout.setStyle("-fx-background-color: white");
         resultsLayout.setPadding(new Insets(50, 75, 50, 75));
         resultsLayout.setTop(pageHeaderLayout);
-        BorderPane.setMargin(pageHeaderLayout, new Insets(0 , 0, 25, 0));
+        BorderPane.setMargin(pageHeaderLayout, new Insets(0, 0, 25, 0));
         resultsLayout.setCenter(resultsTable.getResultTable());
     }
 
@@ -53,9 +54,15 @@ public class ResultsView {
         return resultsLayout;
     }
 
+    public void setData(List<Lexeme> Lexemes) {
+        resultsTable.getResultTable().getItems().clear();
+        resultsTable.getResultTable().getItems().addAll(Lexemes);
+    }
+
     public static ResultsView getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new ResultsView();
+        }
         return instance;
     }
 }

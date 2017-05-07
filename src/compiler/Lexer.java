@@ -20,6 +20,11 @@ public class Lexer {
         tables.add(transtionTable.initIdentifiers());
     }
 
+    public void setInput(String Input){
+        Lexer.input = Input;
+        transtionTable.column_no = 1;
+        transtionTable.line_no = 1;
+    }
     public void add(transtionTable table) {
         tables.add(table);
     }
