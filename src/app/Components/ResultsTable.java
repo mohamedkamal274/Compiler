@@ -1,12 +1,13 @@
 package app.Components;
 
+import compiler.Lexeme;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
+import javafx.scene.control.cell.PropertyValueFactory;
 public class ResultsTable {
 
     private static ResultsTable instance;
-    private TableView resultsTable;
+    private TableView<Lexeme> resultsTable;
 
     private ResultsTable() {
         this.render();
@@ -17,16 +18,21 @@ public class ResultsTable {
         resultsTable = new TableView();
         resultsTable.setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
 
-        TableColumn lineNumber = new TableColumn("Line Number");
+        TableColumn<Lexeme, Integer> lineNumber = new TableColumn("Line Number");
         lineNumber.setMaxWidth( 1f * Integer.MAX_VALUE * 15 );
-        TableColumn lexeme = new TableColumn("Lexeme");
+        lineNumber.setCellValueFactory(new PropertyValueFactory<>("line_no"));
+        TableColumn<Lexeme, String> lexeme = new TableColumn("Lexeme");
         lexeme.setMaxWidth( 1f * Integer.MAX_VALUE * 23.66666 );
-        TableColumn returnToken = new TableColumn("Return Token");
+        lexeme.setCellValueFactory(new PropertyValueFactory<>("lexeme"));
+        TableColumn<Lexeme, String> returnToken = new TableColumn("Return Token");
         returnToken.setMaxWidth( 1f * Integer.MAX_VALUE * 23.66666 );
-        TableColumn lexemeNumber = new TableColumn("Lexeme Number");
+        returnToken.setCellValueFactory(new PropertyValueFactory<>("token"));
+        TableColumn<Lexeme, Integer> lexemeNumber = new TableColumn("Lexeme Number");
         lexemeNumber.setMaxWidth( 1f * Integer.MAX_VALUE * 15 );
-        TableColumn matchability = new TableColumn("Matchability");
+        lexemeNumber.setCellValueFactory(new PropertyValueFactory<>("lexeme_pos"));
+        TableColumn<Lexeme, Boolean> matchability = new TableColumn("Matchability");
         matchability.setMaxWidth( 1f * Integer.MAX_VALUE * 23.66666 );
+        matchability.setCellValueFactory(new PropertyValueFactory<>("matched"));
         resultsTable.getColumns().addAll(lineNumber, lexeme, returnToken, lexemeNumber, matchability);
     }
 
