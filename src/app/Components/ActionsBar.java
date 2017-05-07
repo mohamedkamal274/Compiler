@@ -1,7 +1,7 @@
 package app.Components;
 
 import app.Navigator;
-import app.Views.ScannerResultsView;
+import app.Views.ResultsView;
 import compiler.Lexeme;
 import compiler.Lexer;
 import java.io.File;
@@ -69,6 +69,7 @@ public class ActionsBar {
         scanner.add(matchability);
 
         //parser
+        /* TODO
         parser = new ArrayList<>();
         TableColumn<DummyClass, Integer> parserlineNumber = new TableColumn("Line Number");
         parserlineNumber.setMaxWidth(1f * Integer.MAX_VALUE * 15);
@@ -81,7 +82,7 @@ public class ActionsBar {
         TableColumn<DummyClass, String> role = new TableColumn("Rule Used");
         role.setMaxWidth(1f * Integer.MAX_VALUE * 23.66666);
         role.setCellValueFactory(new PropertyValueFactory<>("role"));
-        parser.add(role);
+        parser.add(role);*/
 
         //Error Message
         errorMessage = new Label();
@@ -134,7 +135,7 @@ public class ActionsBar {
     }
 
     private void parse(ActionEvent e) {
-        ScannerResultsView.getInstance().setData(parser, DummyClass.getDummyData());
+        //ResultsView.getInstance().setData(parser, DummyClass.getDummyData());
         Navigator.viewPage();
     }
 
@@ -143,7 +144,7 @@ public class ActionsBar {
             fileContent = Editor.getInstance().getEditor().getText();
         }
         lexer.setInput(fileContent);
-        ScannerResultsView.getInstance().setData(scanner,
+        ResultsView.getInstance().setData(scanner,
                 lexer.lexicalAnalyzer()
                         .parallelStream()
                         .filter(lexeme -> !lexeme.getToken().equals("White Space"))

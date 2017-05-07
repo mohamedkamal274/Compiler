@@ -8,9 +8,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
-public class ScannerResultsView {
+public class ResultsView {
 
-    private static ScannerResultsView instance;
+    private static ResultsView instance;
     private BorderPane resultsLayout;
     private BorderPane pageHeaderLayout;
     private GridPane pageTitleLayout;
@@ -19,7 +19,7 @@ public class ScannerResultsView {
     private Label headline;
     private ResultsTable resultsTable;
 
-    private ScannerResultsView() {
+    private ResultsView() {
         this.render();
     }
 
@@ -74,9 +74,9 @@ public class ScannerResultsView {
         this.numberOfErrors.setText("Number of errors: " + numberOfErrors);
     }
 
-    public static ScannerResultsView getInstance() {
+    public static ResultsView getInstance() {
         if (instance == null) {
-            instance = new ScannerResultsView();
+            instance = new ResultsView();
         }
         return instance;
     }
