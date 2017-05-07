@@ -7,7 +7,6 @@ package compiler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 /**
  *
@@ -50,12 +49,12 @@ public class transtionTable {
                 line_no += 1;
                 column_no = 1;
             }
-            System.out.println(ch + "-" + stat.num);
+            //System.out.println(ch + "-" + stat.num);
             x += ch;
             if (stat.isAcceptanceState() || stat.isErrorState()) {
                 if (input.length() == counter + 1 || stat.nextState(input.charAt(counter + 1)) == null) {
                     column_no++;
-                    System.out.println(x);
+                    //System.out.println(x);
                     if (stat.isAcceptanceState()) {
 
                         return new Lexeme(line_no, x, this.token, columnNo, true);
@@ -66,12 +65,12 @@ public class transtionTable {
             }
             counter++;
         }
-        System.out.println(x);
+        //System.out.println(x);
         return null;
     }
 
     public void put(int stateNum, Char ch, int nextState) {
-        System.out.println(stateNum + " " + ch + " " + nextState);
+        //System.out.println(stateNum + " " + ch + " " + nextState);
         states.get(stateNum).nextState.put(ch, states.get(nextState));
     }
 
