@@ -5,28 +5,28 @@ import java.util.ArrayList;
 public class Lexer {
 
     static String input;
-    ArrayList<transtionTable> tables;
+    ArrayList<TranstionTable> tables;
 
     public Lexer(String input) {
         Lexer.input = input;
         tables = new ArrayList<>();
-        tables.add(transtionTable.whiteSpace());
-        tables.add(transtionTable.initSingleComment());
-        tables.add(transtionTable.initcomment());
-        tables.add(transtionTable.initChar());
-        tables.add(transtionTable.initString());
-        tables.addAll(reservedKeywords.keywords());
-        tables.add(transtionTable.initDigit());
-        tables.add(transtionTable.initIdentifiers());
+        tables.add(TranstionTable.whiteSpace());
+        tables.add(TranstionTable.initSingleComment());
+        tables.add(TranstionTable.initcomment());
+        tables.add(TranstionTable.initChar());
+        tables.add(TranstionTable.initString());
+        tables.addAll(ReservedKeywords.keywords());
+        tables.add(TranstionTable.initDigit());
+        tables.add(TranstionTable.initIdentifiers());
     }
 
     public void setInput(String Input) {
         Lexer.input = Input;
-        transtionTable.column_no = 1;
-        transtionTable.line_no = 1;
+        TranstionTable.column_no = 1;
+        TranstionTable.line_no = 1;
     }
 
-    public void add(transtionTable table) {
+    public void add(TranstionTable table) {
         tables.add(table);
     }
 
@@ -42,7 +42,7 @@ public class Lexer {
         ArrayList<Lexeme> lexemes = new ArrayList<>();
         while (input.length() != 0) {
             Lexeme lexeme = null;
-            for (transtionTable table : tables) {
+            for (TranstionTable table : tables) {
                 lexeme = table.match(input);
                 if (lexeme != null) {
                     input = subString(lexeme.getLexeme().length(), input);
@@ -51,11 +51,11 @@ public class Lexer {
                 }
             }
             if (lexeme == null) {
-                lexemes.add(new Lexeme(transtionTable.line_no, input.charAt(0)+"" ,"Not define" , transtionTable.column_no, Boolean.FALSE));
-                transtionTable.column_no++;
+                lexemes.add(new Lexeme(TranstionTable.line_no, input.charAt(0)+"" ,"Not define" , TranstionTable.column_no, Boolean.FALSE));
+                TranstionTable.column_no++;
                 input = subString(1, input);
             } else if (this.equal(lexeme.getToken(),"White Space")) {
-                transtionTable.column_no--;
+                TranstionTable.column_no--;
             }
         }
         return lexemes;
