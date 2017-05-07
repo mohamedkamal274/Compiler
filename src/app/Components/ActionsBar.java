@@ -89,8 +89,7 @@ public class ActionsBar {
         errorMessage.getStyleClass().add("error-message");
 
         errorMessageScroll = new ScrollPane(errorMessage);
-        errorMessageScroll.setMinWidth(700);
-        errorMessageScroll.setMaxWidth(1000);
+        errorMessageScroll.setMaxWidth(650);
         errorMessageScroll.setMaxHeight(75);
         errorMessageScroll.getStyleClass().add("scrollbar");
         errorMessageScroll.toBack();
