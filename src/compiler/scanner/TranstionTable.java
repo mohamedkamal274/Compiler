@@ -10,7 +10,7 @@ public class TranstionTable {
     static int line_no = 1;
     static int column_no = 1;
 
-    public TranstionTable(String token, int stateCount, int... acceptState) {
+    public TranstionTable(String token, int stateCount, int... acceptState) { 
         this.token = token;
         Arrays.sort(acceptState);
         for (int i = 0; i <= stateCount; i++) {
@@ -90,7 +90,7 @@ public class TranstionTable {
     }
 
     public static TranstionTable initDigit() {
-        TranstionTable digit = new TranstionTable("digit", 2, 1);
+        TranstionTable digit = new TranstionTable("numberConstant", 2, 1);
         Char digitChar = Char.digit;
         digit.put(0, digitChar, 1);
         digit.put(1, digitChar, 1);
@@ -101,15 +101,14 @@ public class TranstionTable {
     }
 
     public static TranstionTable initSingleComment() {
-        TranstionTable comment = new TranstionTable("inline comment", 4, 2, 3);
+        TranstionTable comment = new TranstionTable("inline comment", 4, 2);
         Char dash = new Char('-');
         comment.put(0, dash, 1);
         comment.put(1, dash, 2);
-        comment.put(2, Char.dot, 3);
-        comment.put(3, Char.dot, 3);
+        comment.put(2, Char.dot, 2);
         return comment;
     }
-
+    
     public static TranstionTable initIdentifiers() {
         TranstionTable identifiers = new TranstionTable("id", 4, 1, 2, 3);
         identifiers.put(0, Char.word, 1);
@@ -168,7 +167,7 @@ public class TranstionTable {
         return string;
     }
     public static TranstionTable initChar() {
-        TranstionTable charFa = new TranstionTable("String", 4, 3);
+        TranstionTable charFa = new TranstionTable("charConstant", 4, 3);
         Char singleQouts = new Char('\'');
         charFa.put(0, singleQouts, 1);
         charFa.put(1, Char.dot, 2);
