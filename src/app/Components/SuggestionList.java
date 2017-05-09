@@ -20,9 +20,7 @@ public class SuggestionList {
     private void render() {
         //Creating list
         list = new ContextMenu();
-        list.setMinWidth(250);
-        list.setMaxWidth(250);
-        list.setMaxHeight(500);
+        list.setAutoFix(true);
         menuItems = new ArrayList<>();
     }
 
