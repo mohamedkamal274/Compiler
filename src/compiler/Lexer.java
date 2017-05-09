@@ -51,11 +51,16 @@ public class Lexer {
                 }
             }
             if (lexeme == null) {
-                lexemes.add(new Lexeme(TranstionTable.line_no, input.charAt(0)+"" ,"Not define" , TranstionTable.column_no, Boolean.FALSE));
+                lexemes.add(new Lexeme(TranstionTable.line_no, input.charAt(0) + "", "Not define", TranstionTable.column_no, Boolean.FALSE));
                 TranstionTable.column_no++;
                 input = subString(1, input);
-            } else if (this.equal(lexeme.getToken(),"White Space")) {
+            } else if (this.equal(lexeme.getToken(), "White Space")) {
                 TranstionTable.column_no--;
+                lexemes.remove(lexeme);
+            } else if (equal(lexeme.getToken(), "comment")) {
+                lexeme.setLexeme("/- ... -/");
+            } else if (equal(lexeme.getToken(), "inline comment")) {
+                lexeme.setLexeme("-- ...");
             }
         }
         return lexemes;

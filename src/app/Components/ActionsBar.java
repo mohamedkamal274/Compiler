@@ -120,6 +120,7 @@ public class ActionsBar {
             lexemes = lexer.lexicalAnalyzer();
             errorCount = (int) lexemes.stream().filter(lexeme -> !lexeme.getMatched()).count();
         }
+      
         ResultsView.getInstance().setData(scannerColumns.getScannerColumns(),
                 lexemes
                         .parallelStream()
@@ -132,6 +133,7 @@ public class ActionsBar {
                         })
                         .collect(Collectors.toList())
         );
+
         ResultsView.getInstance().setNumberOfErrors(errorCount);
         Navigator.viewPage();
     }

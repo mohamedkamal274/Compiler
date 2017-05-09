@@ -45,10 +45,10 @@ public class ReservedKeywords {
         reservedWords.put(">=", "relational operators");
         reservedWords.put("^", "Line Delimiter");
         reservedWords.put("#", "Token Delimiter");
-        reservedWords.put("--", "Comment");
+/*        reservedWords.put("--", "Comment");
         reservedWords.put("-/", "Comment");
-        reservedWords.put("/- ", "Comment");
-        reservedWords.put("Require", "Inclusion");
+        reservedWords.put("/- ", "Comment");*/
+        reservedWords.put("require", "Inclusion");
         reservedWords.put("{", "Braces");
         reservedWords.put("}", "Braces");
         reservedWords.put("[", "Braces");
@@ -57,6 +57,8 @@ public class ReservedKeywords {
         reservedWords.put("(", "Braces");
         reservedWords.put("->", "Access Operator");
         reservedWords.put("=", "Assignment operator");
+        reservedWords.put("public", "Access Modifers");
+        reservedWords.put("Private", "Access Modifers");
     }
 
     public static ArrayList<TranstionTable> keywords() {
