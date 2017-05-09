@@ -2,8 +2,8 @@ package app.Components;
 
 import app.Navigator;
 import app.Views.ResultsView;
-import compiler.Lexeme;
-import compiler.Lexer;
+import compiler.scanner.Lexeme;
+import compiler.scanner.Lexer;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

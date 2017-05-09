@@ -3,7 +3,7 @@ package app.Views;
 import app.Components.ActionsBar;
 import app.Components.Editor;
 import app.Components.SuggestionList;
-import compiler.ReservedKeywords;
+import compiler.scanner.ReservedKeywords;
 import javafx.geometry.Point2D;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCode;

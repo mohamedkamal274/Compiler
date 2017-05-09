@@ -1,6 +1,6 @@
 package app.Components;
 
-import compiler.Lexeme;
+import compiler.scanner.Lexeme;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
