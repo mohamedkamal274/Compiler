@@ -4,6 +4,7 @@ import app.Views.EditorView;
 import app.Views.ResultsView;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -31,13 +32,14 @@ public class App extends Application {
         scene.getStylesheets().add("/styles/editor.css");
         scene.getStylesheets().add("/styles/results-view.css");
         scene.getStylesheets().add("/styles/action-bar.css");
+        scene.getStylesheets().add("/styles/suggestion-list.css");
 
         primaryStage.setTitle("Compiler Editor");
         primaryStage.setMinWidth(1200);
         primaryStage.setMinHeight(600);
 
         primaryStage.setScene(scene);
-        //primaryStage.getIcons().add(new Image("/assets/app-logo.png"));
+        primaryStage.getIcons().add(new Image("/assets/app-logo.png"));
         primaryStage.show();
     }
 

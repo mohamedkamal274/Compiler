@@ -29,6 +29,7 @@ public class TranstionTable {
     public Lexeme match(String input) {
         State stat = states.get(0);
         int columnNo = column_no;
+        int lineNo = line_no;
         String x = "";
         int counter = 0;
         for (char ch : input.toCharArray()) {
@@ -48,9 +49,9 @@ public class TranstionTable {
                     //System.out.println(x);
                     if (stat.isAcceptanceState()) {
 
-                        return new Lexeme(line_no, x, this.token, columnNo, true);
-                    } else {
-                        return new Lexeme(line_no, x, "Not define", columnNo, false);
+                        return new Lexeme(lineNo, x, this.token, columnNo, true);
+                    } else if (stat.isErrorState()) {
+                        return new Lexeme(lineNo, x, "Not define", columnNo, false);
                     }
                 }
             }
@@ -89,22 +90,18 @@ public class TranstionTable {
     }
 
     public static TranstionTable initDigit() {
-        TranstionTable digit = new TranstionTable("digit", 4, 1, 3);
+        TranstionTable digit = new TranstionTable("digit", 2, 1);
         Char digitChar = Char.digit;
         digit.put(0, digitChar, 1);
         digit.put(1, digitChar, 1);
-        digit.put(1, Char.word, 4);
-        digit.put(1, new Char('.'), 2);
-        digit.put(2, digitChar, 3);
-        digit.put(3, digitChar, 3);
-        digit.put(3, Char.word, 4);
-        digit.put(4, Char.word, 4);
-        digit.put(4, Char.digit, 4);
+        digit.put(1, Char.word, 2);
+        digit.put(2, Char.word, 2);
+        digit.put(2, Char.digit, 2);
         return digit;
     }
 
     public static TranstionTable initSingleComment() {
-        TranstionTable comment = new TranstionTable("comment", 4, 2, 3);
+        TranstionTable comment = new TranstionTable("inline comment", 4, 2, 3);
         Char dash = new Char('-');
         comment.put(0, dash, 1);
         comment.put(1, dash, 2);
@@ -126,7 +123,7 @@ public class TranstionTable {
     }
 
     public static TranstionTable reservedWord(String keyword, String token) {
-        TranstionTable keyWordFa = new TranstionTable(token, keyword.length() + 1, keyword.length());
+        TranstionTable keyWordFa = new TranstionTable(token, keyword.length() + 2, keyword.length());
         int counter = 0;
         for (char ch : keyword.toCharArray()) {
             keyWordFa.put(counter, new Char(ch), counter + 1);

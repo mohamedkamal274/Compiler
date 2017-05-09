@@ -2,7 +2,6 @@ package app.Views;
 
 import app.Components.ResultsTable;
 import app.Navigator;
-import compiler.Lexeme;
 import java.util.List;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -13,8 +12,10 @@ public class ResultsView {
 
     private static ResultsView instance;
     private BorderPane resultsLayout;
-    private GridPane pageHeaderLayout;
+    private BorderPane pageHeaderLayout;
+    private GridPane pageTitleLayout;
     private Button backButton;
+    private Label numberOfErrors;
     private Label headline;
     private ResultsTable resultsTable;
 
@@ -32,11 +33,19 @@ public class ResultsView {
         headline = new Label("Results");
         headline.getStyleClass().add("headline");
 
-        pageHeaderLayout = new GridPane();
-        pageHeaderLayout.setHgap(10);
+        pageTitleLayout = new GridPane();
+        pageTitleLayout.setHgap(10);
         GridPane.setConstraints(backButton, 0, 0);
         GridPane.setConstraints(headline, 1, 0);
-        pageHeaderLayout.getChildren().addAll(backButton, headline);
+        pageTitleLayout.getChildren().addAll(backButton, headline);
+
+        //Number of errors
+        numberOfErrors = new Label("Number of errors");
+        numberOfErrors.getStyleClass().add("error-number");
+
+        pageHeaderLayout = new BorderPane();
+        pageHeaderLayout.setLeft(pageTitleLayout);
+        pageHeaderLayout.setRight(numberOfErrors);
 
         //Results table
         resultsTable = ResultsTable.getInstance();
@@ -54,9 +63,15 @@ public class ResultsView {
         return resultsLayout;
     }
 
-    public void setData(List<Lexeme> Lexemes) {
+    public void setData(List<TableColumn> columns, List<Object> Lexemes) {
+        resultsTable.getResultTable().getColumns().clear();
+        resultsTable.getResultTable().getColumns().addAll(columns);
         resultsTable.getResultTable().getItems().clear();
         resultsTable.getResultTable().getItems().addAll(Lexemes);
+    }
+
+    public void setNumberOfErrors(int numberOfErrors){
+        this.numberOfErrors.setText("Number of errors: " + numberOfErrors);
     }
 
     public static ResultsView getInstance() {
