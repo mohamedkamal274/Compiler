@@ -111,7 +111,7 @@ public class TranstionTable {
     }
 
     public static TranstionTable initIdentifiers() {
-        TranstionTable identifiers = new TranstionTable("identifiers", 4, 1, 2, 3);
+        TranstionTable identifiers = new TranstionTable("id", 4, 1, 2, 3);
         identifiers.put(0, Char.word, 1);
         identifiers.put(1, Char.word, 2);
         identifiers.put(1, Char.digit, 3);
