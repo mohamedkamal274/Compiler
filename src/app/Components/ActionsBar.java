@@ -16,8 +16,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
@@ -62,8 +60,8 @@ public class ActionsBar {
         Editor.getInstance().getEditor().textProperty().addListener(this::findError);
 
         errorMessageScroll = new ScrollPane(errorMessage);
-        errorMessageScroll.setMinWidth(850);
-        errorMessageScroll.setMaxWidth(850);
+        errorMessageScroll.setMinWidth(800);
+        errorMessageScroll.setMaxWidth(800);
         errorMessageScroll.setMaxHeight(125);
         errorMessageScroll.getStyleClass().add("scrollbar");
         errorMessageScroll.toBack();
