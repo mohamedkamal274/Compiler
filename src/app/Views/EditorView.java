@@ -2,7 +2,13 @@ package app.Views;
 
 import app.Components.ActionsBar;
 import app.Components.Editor;
+import app.Components.SuggestionList;
+import javafx.geometry.Point2D;
+import javafx.scene.control.TextInputControl;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
+
+import java.util.ArrayList;
 
 public class EditorView {
 
@@ -10,6 +16,14 @@ public class EditorView {
     private BorderPane editorLayout;
     private Editor editor;
     private ActionsBar actionsBar;
+    private SuggestionList suggestionList;
+
+    private TextInputControl control;
+    private Point2D position;
+
+    public int wordStartPosition = 0;
+    public int wordEndPosition = 0;
+    public String selectedWord = "";
 
     private EditorView() {
         this.render();
@@ -19,8 +33,34 @@ public class EditorView {
         //Editor
         editor = Editor.getInstance();
 
+        //Showing suggestion list
+        editor.getEditor().setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.CONTROL) {
+                control = (TextInputControl) e.getSource();
+                position = control.getInputMethodRequests().getTextLocation(0);
+                suggestionList.showList(editorLayout, position.getX(), position.getY());
+                //suggestionList.addItemsToList(test); TODO send the arraylist
+            } else {
+                suggestionList.hideList();
+            }
+        });
+
+        //Getting current word and indexes
+        editor.getEditor().caretPositionProperty().addListener((obs, oldPosition, newPosition) -> {
+            String text = editor.getEditor().getText().substring(0, newPosition.intValue());
+            int index ;
+            for (index = text.length() - 1; index >= 0 && !Character.isWhitespace(text.charAt(index)); index--);
+
+            wordStartPosition = index + 1;
+            wordEndPosition = (int) newPosition;
+            selectedWord = text.substring(index + 1, text.length());
+        });
+
         //Action bar
         actionsBar = ActionsBar.getInstance();
+
+        //Suggestion list
+        suggestionList = SuggestionList.getInstance();
 
         //Editor layout
         editorLayout = new BorderPane();
