@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -25,6 +26,8 @@ public class ActionsBar {
 
     private ArrayList<TableColumn> scanner;
     private ArrayList<TableColumn> parser;
+    private ArrayList<Lexeme> lexemes = new ArrayList<>();
+    private int errorCount = 0;
 
     private static ActionsBar instance;
     private BorderPane actionBarLayout;
@@ -83,10 +86,12 @@ public class ActionsBar {
         role.setMaxWidth(1f * Integer.MAX_VALUE * 23.66666);
         role.setCellValueFactory(new PropertyValueFactory<>("role"));
         parser.add(role);*/
-
         //Error Message
         errorMessage = new Label();
         errorMessage.getStyleClass().add("error-message");
+
+        //Error code
+        Editor.getInstance().getEditor().textProperty().addListener(this::findError);
 
         errorMessageScroll = new ScrollPane(errorMessage);
         errorMessageScroll.setMaxWidth(650);
@@ -141,10 +146,13 @@ public class ActionsBar {
     private void scan(ActionEvent e) {
         if (!fileExist) {
             fileContent = Editor.getInstance().getEditor().getText();
+        } else {
+            lexer.setInput(fileContent);
+            lexemes = lexer.lexicalAnalyzer();
+            errorCount = (int) lexemes.stream().filter(lexeme -> !lexeme.getMatched()).count();
         }
-        lexer.setInput(fileContent);
         ResultsView.getInstance().setData(scanner,
-                lexer.lexicalAnalyzer()
+                lexemes
                         .parallelStream()
                         .filter(lexeme -> !lexeme.getToken().equals("White Space"))
                         .map(lexeme -> {
@@ -155,7 +163,24 @@ public class ActionsBar {
                         })
                         .collect(Collectors.toList())
         );
+        ResultsView.getInstance().setNumberOfErrors(errorCount);
         Navigator.viewPage();
+    }
+
+    public void findError(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        lexer.setInput(newValue);
+        errorMessage.setText("");
+        lexemes = lexer.lexicalAnalyzer();
+        errorCount = 0;
+        String errors = "";
+        for (Lexeme lexeme : lexemes) {
+            if (!lexeme.getMatched()) {
+                errorCount++;
+                errors += (errors.isEmpty() ? "" : "\n") + "Error at " + lexeme.getLine_no() + ":" + lexeme.getLexeme_pos() + " Not defined - (" + lexeme.getLexeme() + ")";
+            }
+        }
+        errorMessage.setText(errors);
+        parseButton.setDisable(!errorMessage.getText().isEmpty());
     }
 
     private void browse(ActionEvent e) {
