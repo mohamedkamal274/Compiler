@@ -24,8 +24,8 @@ import javafx.stage.FileChooser;
 
 public class ActionsBar {
 
-    private ArrayList<TableColumn> scanner;
-    private ArrayList<TableColumn> parser;
+    private ScannerColumns scannerColumns;
+    private ParserColumns parserColumns;
     private ArrayList<Lexeme> lexemes = new ArrayList<>();
     private int errorCount = 0;
 
@@ -49,43 +49,11 @@ public class ActionsBar {
 
     private void render() {
         //scanner
-        scanner = new ArrayList<>();
-        TableColumn<Lexeme, Integer> lineNumber = new TableColumn("Line Number");
-        lineNumber.setMaxWidth(1f * Integer.MAX_VALUE * 15);
-        lineNumber.setCellValueFactory(new PropertyValueFactory<>("line_no"));
-        scanner.add(lineNumber);
-        TableColumn<Lexeme, String> lexeme = new TableColumn("Lexeme");
-        lexeme.setMaxWidth(1f * Integer.MAX_VALUE * 23.66666);
-        lexeme.setCellValueFactory(new PropertyValueFactory<>("lexeme"));
-        scanner.add(lexeme);
-        TableColumn<Lexeme, String> returnToken = new TableColumn("Return Token");
-        returnToken.setMaxWidth(1f * Integer.MAX_VALUE * 23.66666);
-        returnToken.setCellValueFactory(new PropertyValueFactory<>("token"));
-        scanner.add(returnToken);
-        TableColumn<Lexeme, Integer> lexemeNumber = new TableColumn("Lexeme Number");
-        lexemeNumber.setMaxWidth(1f * Integer.MAX_VALUE * 15);
-        lexemeNumber.setCellValueFactory(new PropertyValueFactory<>("lexeme_pos"));
-        scanner.add(lexemeNumber);
-        TableColumn<Lexeme, Boolean> matchability = new TableColumn("Matchability");
-        matchability.setMaxWidth(1f * Integer.MAX_VALUE * 23.66666);
-        matchability.setCellValueFactory(new PropertyValueFactory<>("matched"));
-        scanner.add(matchability);
+        scannerColumns = ScannerColumns.getInstance();
 
         //parser
-        /* TODO
-        parser = new ArrayList<>();
-        TableColumn<DummyClass, Integer> parserlineNumber = new TableColumn("Line Number");
-        parserlineNumber.setMaxWidth(1f * Integer.MAX_VALUE * 15);
-        parserlineNumber.setCellValueFactory(new PropertyValueFactory<>("lineNo"));
-        parser.add(parserlineNumber);
-        TableColumn<DummyClass, Boolean> parserMatchability = new TableColumn("Matchability");
-        parserMatchability.setMaxWidth(1f * Integer.MAX_VALUE * 23.66666);
-        parserMatchability.setCellValueFactory(new PropertyValueFactory<>("matchability"));
-        parser.add(parserMatchability);
-        TableColumn<DummyClass, String> role = new TableColumn("Rule Used");
-        role.setMaxWidth(1f * Integer.MAX_VALUE * 23.66666);
-        role.setCellValueFactory(new PropertyValueFactory<>("role"));
-        parser.add(role);*/
+        parserColumns = ParserColumns.getInstance();
+
         //Error Message
         errorMessage = new Label();
         errorMessage.getStyleClass().add("error-message");
@@ -94,8 +62,9 @@ public class ActionsBar {
         Editor.getInstance().getEditor().textProperty().addListener(this::findError);
 
         errorMessageScroll = new ScrollPane(errorMessage);
-        errorMessageScroll.setMaxWidth(650);
-        errorMessageScroll.setMaxHeight(75);
+        errorMessageScroll.setMinWidth(850);
+        errorMessageScroll.setMaxWidth(850);
+        errorMessageScroll.setMaxHeight(125);
         errorMessageScroll.getStyleClass().add("scrollbar");
         errorMessageScroll.toBack();
 
@@ -139,7 +108,7 @@ public class ActionsBar {
     }
 
     private void parse(ActionEvent e) {
-        //ResultsView.getInstance().setData(parser, DummyClass.getDummyData());
+        //ResultsView.getInstance().setData(parserColumns, DummyClass.getDummyData());
         Navigator.viewPage();
     }
 
@@ -151,7 +120,20 @@ public class ActionsBar {
             lexemes = lexer.lexicalAnalyzer();
             errorCount = (int) lexemes.stream().filter(lexeme -> !lexeme.getMatched()).count();
         }
-        ResultsView.getInstance().setData(scanner,new ArrayList<Object>(lexemes));
+      
+        ResultsView.getInstance().setData(scannerColumns.getScannerColumns(),
+                lexemes
+                        .parallelStream()
+                        .filter(lexeme -> !lexeme.getToken().equals("White Space"))
+                        .map(lexeme -> {
+                            if (lexeme.getToken().equals("comment")) {
+                                lexeme.setLexeme(lexeme.getLexeme().substring(0, 2));
+                            }
+                            return lexeme;
+                        })
+                        .collect(Collectors.toList())
+        );
+
         ResultsView.getInstance().setNumberOfErrors(errorCount);
         Navigator.viewPage();
     }
