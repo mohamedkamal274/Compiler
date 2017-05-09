@@ -37,7 +37,7 @@ public class EditorView {
        
         //Showing suggestion list
         editor.getEditor().setOnKeyPressed(e -> {
-            if (e.isControlDown()) {
+            if (e.isAltDown()) {
                 control = (TextInputControl) e.getSource();
                 position = control.getInputMethodRequests().getTextLocation(0);
                 suggestionList.showList(editorLayout, position.getX(), position.getY());
@@ -46,7 +46,6 @@ public class EditorView {
             } else {
                 suggestionList.hideList();
             }
-            e.consume();
         });
 
         //Getting current word and indexes
