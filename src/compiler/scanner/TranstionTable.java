@@ -152,7 +152,7 @@ public class TranstionTable {
     }
 
     public static TranstionTable initString() {
-        TranstionTable string = new TranstionTable("String", 4, 2);
+        TranstionTable string = new TranstionTable("STR", 4, 2);
         Char doubleQouts = new Char('"');
         string.put(0, doubleQouts, 1);
         string.put(1, doubleQouts, 2);
