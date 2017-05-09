@@ -10,7 +10,7 @@ public class TranstionTable {
     static int line_no = 1;
     static int column_no = 1;
 
-    public TranstionTable(String token, int stateCount, int... acceptState) {
+    public TranstionTable(String token, int stateCount, int... acceptState) { 
         this.token = token;
         Arrays.sort(acceptState);
         for (int i = 0; i <= stateCount; i++) {
@@ -41,12 +41,10 @@ public class TranstionTable {
                 line_no += 1;
                 column_no = 1;
             }
-            //System.out.println(ch + "-" + stat.num);
             x += ch;
             if (stat.isAcceptanceState() || stat.isErrorState()) {
                 if (input.length() == counter + 1 || stat.nextState(input.charAt(counter + 1)) == null) {
                     column_no++;
-                    //System.out.println(x);
                     if (stat.isAcceptanceState()) {
 
                         return new Lexeme(lineNo, x, this.token, columnNo, true);
@@ -57,12 +55,10 @@ public class TranstionTable {
             }
             counter++;
         }
-        //System.out.println(x);
         return null;
     }
 
     public void put(int stateNum, Char ch, int nextState) {
-        //System.out.println(stateNum + " " + ch + " " + nextState);
         states.get(stateNum).nextState.put(ch, states.get(nextState));
     }
 
@@ -90,7 +86,7 @@ public class TranstionTable {
     }
 
     public static TranstionTable initDigit() {
-        TranstionTable digit = new TranstionTable("digit", 2, 1);
+        TranstionTable digit = new TranstionTable("numberConstant", 2, 1);
         Char digitChar = Char.digit;
         digit.put(0, digitChar, 1);
         digit.put(1, digitChar, 1);
@@ -101,17 +97,16 @@ public class TranstionTable {
     }
 
     public static TranstionTable initSingleComment() {
-        TranstionTable comment = new TranstionTable("inline comment", 4, 2, 3);
+        TranstionTable comment = new TranstionTable("inline comment", 4, 2);
         Char dash = new Char('-');
         comment.put(0, dash, 1);
         comment.put(1, dash, 2);
-        comment.put(2, Char.dot, 3);
-        comment.put(3, Char.dot, 3);
+        comment.put(2, Char.dot, 2);
         return comment;
     }
-
+    
     public static TranstionTable initIdentifiers() {
-        TranstionTable identifiers = new TranstionTable("identifiers", 4, 1, 2, 3);
+        TranstionTable identifiers = new TranstionTable("id", 4, 1, 2, 3);
         identifiers.put(0, Char.word, 1);
         identifiers.put(1, Char.word, 2);
         identifiers.put(1, Char.digit, 3);
@@ -168,7 +163,7 @@ public class TranstionTable {
         return string;
     }
     public static TranstionTable initChar() {
-        TranstionTable charFa = new TranstionTable("String", 4, 3);
+        TranstionTable charFa = new TranstionTable("charConstant", 4, 3);
         Char singleQouts = new Char('\'');
         charFa.put(0, singleQouts, 1);
         charFa.put(1, Char.dot, 2);

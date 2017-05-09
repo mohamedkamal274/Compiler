@@ -10,6 +10,14 @@ public class ReservedKeywords {
     public static HashMap<String, String> reservedWords = new HashMap<>();
 
     static {
+        reservedWords.put(";", "SemiColon");
+        reservedWords.put("!", "not");
+        reservedWords.put(",", "Comma");
+        reservedWords.put("true", "Boolean");
+        reservedWords.put("false", "Boolean");
+        reservedWords.put(".txt", "extension");
+        reservedWords.put("BackedValue", "BackedValue");
+        reservedWords.put("TerminateThisNow", "TerminateThisNow");
         reservedWords.put("Pattern", "Class");
         reservedWords.put("DerivedFrom", "Inheritance");
         reservedWords.put("TrueFor", "Condition");
@@ -34,6 +42,9 @@ public class ReservedKeywords {
         reservedWords.put("-", "Arithmetic Operation");
         reservedWords.put("*", "Arithmetic Operation");
         reservedWords.put("/", "Arithmetic Operation");
+        reservedWords.put("%", "Arithmetic Operation");
+        reservedWords.put("<<", "Arithmetic Operation");
+        reservedWords.put(">>", "Arithmetic Operation");
         reservedWords.put("&&", "Logic operators");
         reservedWords.put("||", "Logic operators");
         reservedWords.put("~", "Logic operators");
@@ -45,7 +56,7 @@ public class ReservedKeywords {
         reservedWords.put(">=", "relational operators");
         reservedWords.put("^", "Line Delimiter");
         reservedWords.put("#", "Token Delimiter");
-/*        reservedWords.put("--", "Comment");
+        /*        reservedWords.put("--", "Comment");
         reservedWords.put("-/", "Comment");
         reservedWords.put("/- ", "Comment");*/
         reservedWords.put("require", "Inclusion");
@@ -58,7 +69,7 @@ public class ReservedKeywords {
         reservedWords.put("->", "Access Operator");
         reservedWords.put("=", "Assignment operator");
         reservedWords.put("public", "Access Modifers");
-        reservedWords.put("Private", "Access Modifers");
+        reservedWords.put("private", "Access Modifers");
     }
 
     public static ArrayList<TranstionTable> keywords() {
