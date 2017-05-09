@@ -109,7 +109,7 @@ public class ActionsBar {
         if (!fileExist) {
             fileContent = Editor.getInstance().getEditor().getText();
         }
-        ParseTable parseObject=new ParseTable();
+        ParseTable parseObject = new ParseTable();
         ArrayList<Output> outputData = null;
         try {
             outputData = parseObject.topDownAlgorithm(fileContent);
@@ -117,6 +117,8 @@ public class ActionsBar {
             Logger.getLogger(ActionsBar.class.getName()).log(Level.SEVERE, null, ex);
         }
         ResultsView.getInstance().setData(parserColumns.getParserColumns(), new ArrayList<Object>(outputData));
+        ResultsView.getInstance().setNumberOfErrors((int) countParseError(outputData));
+        SuggestionList.getInstance().hideList();
         Navigator.viewPage();
     }
 
@@ -128,7 +130,7 @@ public class ActionsBar {
             lexemes = lexer.lexicalAnalyzer();
             errorCount = (int) lexemes.stream().filter(lexeme -> !lexeme.getMatched()).count();
         }
-      
+
         ResultsView.getInstance().setData(scannerColumns.getScannerColumns(),
                 lexemes
                         .parallelStream()
@@ -143,10 +145,11 @@ public class ActionsBar {
         );
 
         ResultsView.getInstance().setNumberOfErrors(errorCount);
+        SuggestionList.getInstance().hideList();
         Navigator.viewPage();
     }
-    
-    private void compile(ActionEvent e){
+
+    private void compile(ActionEvent e) {
         if (!fileExist) {
             fileContent = Editor.getInstance().getEditor().getText();
         } else {
@@ -154,15 +157,15 @@ public class ActionsBar {
             lexemes = lexer.lexicalAnalyzer();
             errorCount = (int) lexemes.stream().filter(lexeme -> !lexeme.getMatched()).count();
         }
-       ArrayList<Lexeme> AllLexme= new ArrayList(lexemes
-                        .parallelStream()
-                        .filter(lexeme -> !lexeme.getToken().contains("comment"))
-                        .collect(Collectors.toList()));
-       String program="";
-       for(int i=0;i<AllLexme.size();i++){
-           program+=AllLexme.get(i).getLexeme()+" ";
-       }
-        ParseTable parseObject=new ParseTable();
+        ArrayList<Lexeme> AllLexme = new ArrayList(lexemes
+                .parallelStream()
+                .filter(lexeme -> !lexeme.getToken().contains("comment"))
+                .collect(Collectors.toList()));
+        String program = "";
+        for (int i = 0; i < AllLexme.size(); i++) {
+            program += AllLexme.get(i).getLexeme() + " ";
+        }
+        ParseTable parseObject = new ParseTable();
         //System.out.println(program);
         ArrayList<Output> outputData = null;
         try {
@@ -171,9 +174,11 @@ public class ActionsBar {
             Logger.getLogger(ActionsBar.class.getName()).log(Level.SEVERE, null, ex);
         }
         ResultsView.getInstance().setData(parserColumns.getParserColumns(), new ArrayList<Object>(outputData));
+        ResultsView.getInstance().setNumberOfErrors((int) countParseError(outputData));
+        SuggestionList.getInstance().hideList();
         Navigator.viewPage();
     }
-    
+
     private void findError(ObservableValue<? extends String> observable, String oldValue, String newValue) {
         lexer.setInput(newValue);
         errorMessage.setText("");
@@ -192,12 +197,20 @@ public class ActionsBar {
 
     private void browse(ActionEvent e) {
         //Clearing if there is an existing file
-        fileExist = false;
+        if (fileExist) {
+            fileContent = "";
+            browseButton.setText("Browse");
+            fileExist = false;
+            lexemes.clear();
+            return;
+        }
         FileChooser openFile = new FileChooser();
         openFile.setTitle("Choose code file");
         File file = openFile.showOpenDialog(null);
         if (file != null) {
+            browseButton.setText("Clear");
             try {
+
                 fileContent = java.nio.file.Files.lines(file.toPath()).reduce("", (t, u) -> t + u + "\n");
             } catch (IOException ex) {
                 Logger.getGlobal().log(Level.SEVERE, ex.getMessage(), ex);
@@ -210,6 +223,10 @@ public class ActionsBar {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage.setText(errorMessage);
+    }
+
+    private long countParseError(ArrayList<Output> out) {
+        return out.stream().filter(p -> p.getRule().contains("Syntax Error")).count();
     }
 
     public BorderPane getActionBar() {
