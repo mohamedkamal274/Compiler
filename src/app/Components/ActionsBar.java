@@ -151,18 +151,7 @@ public class ActionsBar {
             lexemes = lexer.lexicalAnalyzer();
             errorCount = (int) lexemes.stream().filter(lexeme -> !lexeme.getMatched()).count();
         }
-        ResultsView.getInstance().setData(scanner,
-                lexemes
-                        .parallelStream()
-                        .filter(lexeme -> !lexeme.getToken().equals("White Space"))
-                        .map(lexeme -> {
-                            if (lexeme.getToken().equals("comment")) {
-                                lexeme.setLexeme(lexeme.getLexeme().substring(0, 2));
-                            }
-                            return lexeme;
-                        })
-                        .collect(Collectors.toList())
-        );
+        ResultsView.getInstance().setData(scanner,new ArrayList<Object>(lexemes));
         ResultsView.getInstance().setNumberOfErrors(errorCount);
         Navigator.viewPage();
     }
