@@ -131,18 +131,7 @@ public class ActionsBar {
             errorCount = (int) lexemes.stream().filter(lexeme -> !lexeme.getMatched()).count();
         }
 
-        ResultsView.getInstance().setData(scannerColumns.getScannerColumns(),
-                lexemes
-                        .parallelStream()
-                        .filter(lexeme -> !lexeme.getToken().equals("White Space"))
-                        .map(lexeme -> {
-                            if (lexeme.getToken().equals("comment")) {
-                                lexeme.setLexeme(lexeme.getLexeme().substring(0, 2));
-                            }
-                            return lexeme;
-                        })
-                        .collect(Collectors.toList())
-        );
+        ResultsView.getInstance().setData(scannerColumns.getScannerColumns(),new ArrayList(lexemes));
 
         ResultsView.getInstance().setNumberOfErrors(errorCount);
         SuggestionList.getInstance().hideList();
