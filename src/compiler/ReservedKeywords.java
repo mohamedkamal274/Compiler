@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class ReservedKeywords {
 
-    static HashMap<String, String> reservedWords = new HashMap<>();
+    public static HashMap<String, String> reservedWords = new HashMap<>();
 
     static {
         reservedWords.put("Pattern", "Class");

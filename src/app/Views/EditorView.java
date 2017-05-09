@@ -3,12 +3,14 @@ package app.Views;
 import app.Components.ActionsBar;
 import app.Components.Editor;
 import app.Components.SuggestionList;
+import compiler.ReservedKeywords;
 import javafx.geometry.Point2D;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class EditorView {
 
@@ -39,7 +41,7 @@ public class EditorView {
                 control = (TextInputControl) e.getSource();
                 position = control.getInputMethodRequests().getTextLocation(0);
                 suggestionList.showList(editorLayout, position.getX(), position.getY());
-                //suggestionList.addItemsToList(test); TODO send the arraylist
+                suggestionList.addItemsToList(new ArrayList(ReservedKeywords.reservedWords.keySet().stream().filter(p -> p.toLowerCase().startsWith(selectedWord.toLowerCase()) && p.length()>2).sorted().collect(Collectors.toList())));
             } else {
                 suggestionList.hideList();
             }
