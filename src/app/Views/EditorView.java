@@ -34,17 +34,19 @@ public class EditorView {
     private void render() {
         //Editor
         editor = Editor.getInstance();
-
+       
         //Showing suggestion list
         editor.getEditor().setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.CONTROL) {
+            if (e.isControlDown()) {
                 control = (TextInputControl) e.getSource();
                 position = control.getInputMethodRequests().getTextLocation(0);
                 suggestionList.showList(editorLayout, position.getX(), position.getY());
                 suggestionList.addItemsToList(new ArrayList(ReservedKeywords.reservedWords.keySet().stream().filter(p -> p.toLowerCase().startsWith(selectedWord.toLowerCase()) && p.length()>2).sorted().collect(Collectors.toList())));
+                
             } else {
                 suggestionList.hideList();
             }
+            e.consume();
         });
 
         //Getting current word and indexes

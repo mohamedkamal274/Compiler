@@ -60,7 +60,7 @@ public class Lexer {
             } else if (equal(lexeme.getToken(), "comment")) {
                 lexeme.setLexeme("/- ... -/");
             } else if (equal(lexeme.getToken(), "inline comment")) {
-                lexeme.setLexeme("-- ...");
+                lexeme.setLexeme("--");
             }
         }
         return lexemes;
