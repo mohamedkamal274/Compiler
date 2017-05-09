@@ -33,34 +33,12 @@ public class EditorView {
         //Editor
         editor = Editor.getInstance();
 
-        ArrayList<String> test = new ArrayList<>();
-        test.add("Test 1");
-        test.add("Test 1");
-        test.add("Test 1");
-        test.add("Test 1");
-        test.add("Test 1");
-        test.add("Test 1");
-        test.add("Test 1");
-        test.add("Test 1");
-        test.add("Test 1");
-        test.add("Test 1");
-        test.add("Test 1");
-        test.add("Test 1");
-        test.add("Test 1");
-        test.add("Test 1");
-        test.add("Test 1");
-        test.add("Test 1");
-        test.add("Test 1");
-        test.add("Test 1");
-
-
         //Showing suggestion list
         editor.getEditor().setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.CONTROL) {
                 control = (TextInputControl) e.getSource();
                 position = control.getInputMethodRequests().getTextLocation(0);
                 suggestionList.showList(editorLayout, position.getX(), position.getY());
-                suggestionList.addItemsToList(test);
             } else {
                 suggestionList.hideList();
             }
