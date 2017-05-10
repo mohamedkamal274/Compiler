@@ -80,6 +80,7 @@ public class TranstionTable {
         comment.put(2, dot, 4);
         comment.put(3, slash, 6);
         comment.put(3, newline, 2);
+        comment.put(3, dash, 3);
         comment.put(3, dot, 4);
         comment.put(4, dash, 3);
         comment.put(4, newline, 5);
