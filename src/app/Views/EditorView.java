@@ -40,8 +40,11 @@ public class EditorView {
             if (e.isAltDown()) {
                 control = (TextInputControl) e.getSource();
                 position = control.getInputMethodRequests().getTextLocation(0);
+                ArrayList<String> suggested = new ArrayList(ReservedKeywords.reservedWords.keySet().stream().filter(p -> p.toLowerCase().startsWith(selectedWord.toLowerCase()) && p.length()>2).sorted().collect(Collectors.toList()));
+                if (suggested.size()>0){
                 suggestionList.showList(editorLayout, position.getX(), position.getY());
-                suggestionList.addItemsToList(new ArrayList(ReservedKeywords.reservedWords.keySet().stream().filter(p -> p.toLowerCase().startsWith(selectedWord.toLowerCase()) && p.length()>2).sorted().collect(Collectors.toList())));
+                suggestionList.addItemsToList(suggested);
+                }
                 
             } else {
                 suggestionList.hideList();

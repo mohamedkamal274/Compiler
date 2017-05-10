@@ -155,7 +155,7 @@ public class TranstionTable {
         whiteSpace.put(3, newline, 3);
         return whiteSpace;
     }
-
+    
     public static TranstionTable initString() {
         TranstionTable string = new TranstionTable("String", 4, 2);
         Char doubleQouts = new Char('"');
@@ -168,7 +168,7 @@ public class TranstionTable {
         return string;
     }
     public static TranstionTable initChar() {
-        TranstionTable charFa = new TranstionTable("String", 4, 3);
+        TranstionTable charFa = new TranstionTable("charConstant", 4, 3);
         Char singleQouts = new Char('\'');
         charFa.put(0, singleQouts, 1);
         charFa.put(1, Char.dot, 2);

@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  *
@@ -118,7 +119,7 @@ public class ParseTable {
         { "endSymbols",         "-",  "-",  "-",  "-",   "-",    "-",                                                                       "-",                                                        "-",         "-",  "-",   "-",             "-",                      "-",                                "-",                           "-",                              "-",                         "-",                      "-",                                              "-",  "-",     "-",       "-",         "-",                       "-",                         "$",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
         { "AccessModifiersType","-",  "-",  "-",  "-",   "-",    "public",                                                                "private",                                                    "-",         "-",  "-",  "-",             "-",                      "-",                                "-",                           "-",                              "-",                         "-",                      "-",                                              "-",  "-",     "-",       "-",         "-",                       "-",                         "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
         { "fieldDecl",          "-",  "-",  "-",  "-",   "-",    "-",                                                                       "-",                                                        "-",         "-",  "-",  "-","type # id fieldDeclCommonPart", "type # id fieldDeclCommonPart", "type # id fieldDeclCommonPart","type # id fieldDeclCommonPart","type # id fieldDeclCommonPart","type # id fieldDeclCommonPart","type # id fieldDeclCommonPart",                   "-",  "-",     "-",       "-",         "-",                       "-",                         "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
-        { "methodDecl",         "-",  "-",  "-",  "-",   "-",    "-",                                                                       "-",                                                        "-",         "-",  "-", "-","type # id methodDeclOption block","type # id methodDeclOption block","type # id methodDeclOption block","type # id methodDeclOption block","type # id methodDeclOption block","type # id methodDeclOption block","type # id methodDeclOption block",  "-",  "-",     "-",       "-",         "-",                       "-",                         "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
+        { "methodDecl",         "-",  "-",  "-",  "-",   "-",    "-",                                                                       "-",                                                        "-",         "-",  "-", "-","type # id ( methodDeclOption ) block","type # id ( methodDeclOption ) block","type # id ( methodDeclOption ) block","type # id ( methodDeclOption ) block","type # id ( methodDeclOption ) block","type # id ( methodDeclOption ) block","type # id ( methodDeclOption ) block",  "-",  "-",     "-",       "-",         "-",                       "-",                         "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
         { "block",              "{ varDecl ^ statement }",  "-",  "-",  "-",   "-",    "-",                                                                                                             "-",         "-",  "-",   "-", "-",    "-",       "-",      "-",           "-",     "-",       "-",       "-",     "-",  "-",     "-",       "-",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
         { "varDecl",            "-",  "-",  "-",  "-",   "-",    "-",                                                                       "-",                                                        "-",         "-",  "-", "-",    "type # id varDecl*",        "type # id varDecl*",              "type # id varDecl*",        "type # id varDecl*",        "type # id varDecl*",            "type # id varDecl*",         "type # id varDecl*",     "-",  "-",     "-",       "-",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
         { "type",               "-",  "-",  "-",  "-",   "-",    "-",                                                                       "-",                                                        "-",         "-",  "-", "-",    "Ity",         "CwqSequence",                                        "Sity",                         "Ifity",                     "Sifity",                        "Valueless",                "Logical",     "-",  "-",     "-",       "-",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
@@ -129,7 +130,7 @@ public class ParseTable {
         { "methodArg",          "-",  "-",  "-",  "expr",   "-",    "-", "-",  "-", "-",   "-",   "-","-","-","-", "-", "-", "-",  "-", "expr",  "",     "-",       "-",         "-",                     "-",                          "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "expr",   "expr",       "expr",          "expr",        "-", "-","expr",   "-",     "-"  ,"-"},
         { "TrueForStmt",        "-",  "-",  "-",  "-",   "-",    "-",                                                                       "-",                                                         "-",         "-",   "-", "-",               "-",                    "-",                                 "-",                           "-",                         "-",                                  "-",                    "-",                                              "-",  "-",     "TrueFor ( expr ) statement Else statement",       "-",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
         { "whatEverStmt",       "-",  "-",  "-",  "-",   "-",    "-",                                                                       "-",                                                       "-",           "-",   "-", "-",               "-",                    "-",                                  "-",                         "-",                          "-",                              "-",                        "-",                                              "-",  "-",     "-",    "-",    "Whatever ( expr ) statement",            "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
-        { "respondWithStmt",    "-",  "-",  "-",  "-",   "-",    "-",                                                                       "-",     "-",  "-",   "-", "-",    "-",       "-",      "-",           "-",     "-",       "-",       "-",     "-",  "-",     "-",       "BackedValue # RespondWithStmtCommonPart",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
+        { "respondWithStmt",    "-",  "-",  "-",  "-",   "-",    "-",                                                                       "-",     "-",  "-",   "-", "-",    "-",       "-",      "-",           "-",     "-",       "-",       "-",     "-",  "-",     "-",       "BackedValue # expr",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
         {"terminalThisStatment","-",  "-",  "-",  "-",   "-",    "-",                                                                       "-",     "-",  "-",   "-", "-",    "-",               "-",                                            "-",                              "-",                          "-",                              "-",                        "-",                                               "-",  "-",     "-",  "-", "-",     "-",  "-",       "TerminateThisNow",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-","-","-","-","-", "-","-", "-",     "-"  ,"-"},
         { "expr",               "-",  "-",  "-",  "id exprCommonPart expr*",   "-",    "-",         "-",     "-",  "-",   "-", "-",    "-",       "-",      "-",           "-",     "-",       "-",       "-",     "( expr ) expr*",  "-",     "-",       "-",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "constant expr*",   "constant expr*",       "constant expr*",          "constant expr*",        "-", "-","! expr expr*",   "-",     "-"  ,"-"},
         { "binOp",              "-",  "-",  "-",  "-",   "-",    "-",                                                                       "-",     "-",  "-",   "-", "eqOp",    "-",       "-",      "-",           "-",     "-",       "-",       "-",     "-",  "-",     "-",       "-",         "-",     "-",  "-",       "-",         "arithOp", "arithOp", "arithOp",  "arithOp",  "arithOp",  "arithOp",   "-",  "-",  "arithOp", "relOp", "relOp","relOp","relOp","-","eqOP",  "condOp", "condOp", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
@@ -143,12 +144,12 @@ public class ParseTable {
         { "Fname",              "-",  "-",  "-",  "-",   "-",    "-",                                                                       "-",     "-",  "-",   "-", "-",    "-",       "-",      "-",           "-",     "-",       "-",       "-",     "-",  "-",     "-",       "-",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "STR",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
         { "Comment",            "-",  "",  "-",  "-",   "-",    "-",                                                                       "-",     "-",  "-",   "-", "-",    "-",       "-",      "-",           "-",     "-",       "-",       "-",     "-",  "-",     "-",       "-",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "/- -/",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "--",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
         { "varDecl*",           "-",  "",  "-",  "-",   "-",    "-",                                                                       "-",                                                        ", type # id varDecl*",        "-",   "-", "-",    "-",       "-",      "-",           "-",     "-",       "-",       "-",     "-",  "-",     "-",       "-",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
-        { "expr*",              "-",  "",  "-",  "-",   "-",    "-",                                                                       "-",     "-",  "-",   "-", "binOp expr expr*",    "-",       "-",      "-",           "-",     "-",       "-",       "-",     "-",  "",     "-",       "-",         "-",     "-",  "-",       "-",         "binOp expr expr*", "binOp expr expr*", "binOp expr expr*",  "binOp expr expr*",  "binOp expr expr*",  "binOp expr expr*",   "-",  "-",  "binOp expr expr*", "binOp expr expr*", "binOp expr expr*","binOp expr expr*","binOp expr expr*","binOp expr expr*","binOp expr expr*",  "binOp expr expr*", "binOp expr expr*", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
+        { "expr*",              "-",  "",  "-",  "-",   "",    "-",                                                                       "-",     "-",  "-",   "", "binOp expr expr*",    "-",       "-",      "-",           "-",     "-",       "-",       "-",     "-",  "",     "-",       "-",         "-",     "-",  "-",       "-",         "binOp expr expr*", "binOp expr expr*", "binOp expr expr*",  "binOp expr expr*",  "binOp expr expr*",  "binOp expr expr*",   "-",  "-",  "binOp expr expr*", "binOp expr expr*", "binOp expr expr*","binOp expr expr*","binOp expr expr*","binOp expr expr*","binOp expr expr*",  "binOp expr expr*", "binOp expr expr*", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
         { "exprCommonPart",     "-",  "",  "-",  "-",   "-",    "-",                                                                       "-",     "-",  "[ expr ]",   "", "",    "-",       "-",      "-",           "-",     "-",       "-",       "-",     "( methodArg ) ^",  "",     "-",       "-",         "-",     "-",  "-",       "-",         "", "", "",  "",  "",  "",   "-",  "-",  "", "", "","","","","",  "", "", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
-        { "fieldDeclCommonPart","",  "",  "-",  "-",   "-",    "-",                                                                       "-",     "-",  "-",   "-", "-",    "-",       "-",     ", fieldDecl",   "[ intConstant ]",     "-",       "-",       "-",     "-",  "-",     "-",       "-",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","= constant","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
-        { "statementCommonPart","-",  "",  "-",  "-",   "-",    "-",                                                                       "-",                                                          "-",      "[ expr ]",   "-", "-",               "-",                    "-",                            "-",                        "-",                              "-",                    "-",                           "-",                                                      "( methodArg )",  "-",     "-",       "-",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","= expr ^","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
+        { "fieldDeclCommonPart","-",  "",  "-",  "-",   "-",    "-",                                                                       "-",     ", fieldDecl",  "[ intConstant ]",   "-", "-",    "-",       "-",     "-",   "-",     "-",       "-",       "-",     "-",  "",     "-",       "-",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","= constant","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
+        { "statementCommonPart","-",  "",  "-",  "-",   "-",    "-",                                                                       "-",                                                          "-",      "[ expr ] = expr ^",   "-", "-",               "-",                    "-",                            "-",                        "-",                              "-",                    "-",                           "-",                                                      "( methodArg ) ^",  "-",     "-",       "-",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","= expr ^","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
         { "LvalueCommonPart",   "-",  "-",  "-",  "-",   "-",    "-",                                                                       "-",                                                           "-",      "[ expr ]",   "", "-",    "-",       "-",      "-",   "-",     "-",       "-",       "-",     "-",  "-",     "-",       "-",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"},
-        { "methodDeclOption",   "",  "-",  "-",  "-",   "-",    "-",                                                                       "-",                                                        "-",  "-",   "-", "-",    "fieldDecl",       "fieldDecl",      "fieldDecl",   "fieldDecl",     "fieldDecl",       "fieldDecl",       "fieldDecl",     "-",  "-",     "-",       "-",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"}
+        { "methodDeclOption",   "-",  "-",  "-",  "-",   "-",    "-",                                                                       "-",                                                        "-",  "-",   "-", "-",    "fieldDecl",       "fieldDecl",      "fieldDecl",   "fieldDecl",     "fieldDecl",       "fieldDecl",       "fieldDecl",     "-",  "",     "-",       "-",         "-",     "-",  "-",       "-",         "-", "-", "-",  "-",  "-",  "-",   "-",  "-",  "-", "-", "-","-","-","-","-",  "-", "-", "-",  "-",  "-",   "-",       "-",          "-",        "-", "-","-",   "-",     "-"  ,"-"}
       
      };
      /*
@@ -226,77 +227,7 @@ public class ParseTable {
          return process;
      }
      
-     public String ReadFile(String path) throws FileNotFoundException, IOException{
-         System.out.println("in file" );
-            FileInputStream in = null;
-            String fileData="";
-            try {
-         in = new FileInputStream(path);
-         int c;
-         while ((c = in.read()) != -1) {
-             char x=(char)c;
-           fileData+=x;
          
-         }
-      }finally {
-         if (in != null) {
-            in.close();
-         }
-      }
-            System.out.println("fileData" +fileData);
-         return fileData;
-     }
-     
-      public String Require(String program) throws IOException{
-          
-        String []input=StringHandler.split(program);
-        String returnData="";
-        String path="";
-        if(input[0].equals("require")){
-            path=input[2]+input[3];
-            String fileData=ReadFile(path);
-            String []SpiltFileData=StringHandler.split(fileData);
-            for(int i=0;i<SpiltFileData.length;i++){
-               returnData+=SpiltFileData[i]+" ";
-            }
-            for(int i=7;i<input.length;i++){
-                returnData+=input[i]+" ";    
-                }
-            return Require(returnData);
-        }
-        else{
-            boolean flag=false;
-            returnData="";
-            for(int i=0;i<input.length;i++){
-                if(input[i].equals("require")){
-                    flag=true;
-                    path=input[i+2]+input[i+3];
-                    String fileData=ReadFile(path);
-                    Require(fileData);
-                    String []SpiltFileData=StringHandler.split(fileData);
-                   for(int j=0;j<SpiltFileData.length;j++){
-                    returnData+=SpiltFileData[j]+" ";
-             }
-                     i+=5;
-                     }
-                else{
-                    returnData+=input[i]+" ";
-                }
-                   
-                } // end loop 
-            
-            if(flag==false){
-                return program;
-            }
-            else{
-                return Require(returnData);
-            }
-        }
-        
-     }
-      
- 
-      
       public Output setOutput(String index,String parsingPop,String inputPop,String rule) {
         Output setObject =  new Output();
         setObject.setIndex(index);
@@ -307,6 +238,30 @@ public class ParseTable {
        
     }
       
+    public String ReadFile(String path) throws  IOException{
+        // System.out.println("in file" );
+            FileInputStream in = null;
+            String fileData="";
+            try {
+                try{
+         in = new FileInputStream(path);
+                }catch(FileNotFoundException e){
+                    return "";
+                }
+         int c;
+         while ((c = in.read()) != -1) {
+             char x=(char)c;
+           fileData+=x;
+         }
+      }finally {
+         if (in != null) {
+            in.close();
+         }
+      }
+           // System.out.println("fileData :- " +fileData);
+         return fileData;
+     }
+      
     /* LL 1 Parsing Algorithm  
      -- Taking Program Content as Argument
      -- Output the Input is Accepted or not
@@ -315,7 +270,25 @@ public class ParseTable {
         {
            // program=Require(program);
             ArrayList<Output> parsing = new ArrayList<>();
-            int step=1;
+           program = program.replace("\n", " ").replace("\r", " ");
+           // System.out.println(program);
+           
+            
+            String []input=StringHandler.split(program);
+            
+            String path="";
+            
+           /* if(input[0].equals("require")){
+                 path=input[2]+input[3];
+                 String fileData=ReadFile(path);
+                 ArrayList<Output> ReguireFile=this.topDownAlgorithm(fileData);
+                 for(int i=0;i<ReguireFile.size();i++){
+                    parsing.add(ReguireFile.get(i));
+                 }
+            }*/
+            
+            
+             int step=parsing.size()+1;
             String parsingPop = "", inputPop = "" ,rule="";
             boolean findNonTerm,findTerm;
             int error = 0;
@@ -337,6 +310,34 @@ public class ParseTable {
             {
                 findNonTerm = findNonTerminal(parsingPop);
                 findTerm = findTerminal(inputPop);
+                
+                if(inputPop.equals("require")&&parsingPop.equals("require")){
+                    
+                 String braket=inputStack.pop();
+                 //System.out.println("first braket "+braket);
+                 String nameFile=inputStack.pop();
+                 //System.out.println("name file "+nameFile);
+                 String extention=inputStack.pop();
+                // System.out.println("extention "+ extention);
+                 path=nameFile+extention;
+                 //System.out.println(" path "+path);
+                 
+                 inputStack.push(extention);
+                 inputStack.push(nameFile);
+                 inputStack.push(braket);
+                 
+                 String fileData=ReadFile(path);
+                 if(!fileData.equals("")){
+                 ArrayList<Output> RequireFile=this.topDownAlgorithm(fileData);
+                 
+                 for(int i=0;i<RequireFile.size();i++){
+                     Output output=RequireFile.get(i);                     
+                     output.setIndex(i+step+"");
+                    parsing.add(RequireFile.get(i));
+                 }
+                 step=parsing.size()+1;
+                 }   
+                }
 
                 if ( findNonTerm )
                 {
@@ -349,13 +350,15 @@ public class ParseTable {
                                     inputPop = "id";
                         else if(StringHandler.isNumber(inputPop))
                             inputPop = "intConstant";
+                        else if(inputPop.charAt(0)=='\'')
+                            inputPop = "charConstant";
                     }
                     //here we replace the rule
                     rule = findRule(parsingPop,inputPop);
-                    parsing.add(setOutput(Integer.toString(step++),StringHandler.copyStack(parsingStack)+parsingPop,inputPop+StringHandler.copyInputStack(inputStack),parsingPop+" --> "+rule));
-
                     if (rule != "-")
                     {
+                        parsing.add(setOutput(Integer.toString(step++),StringHandler.copyStack(parsingStack)+parsingPop,inputPop+StringHandler.copyInputStack(inputStack),parsingPop+" --> "+rule));
+
                         if(rule.equals("_"))
                             rule = "-";
 
@@ -380,15 +383,17 @@ public class ParseTable {
                                 inputPop = "id";
                         }
                         else if (parsingPop.equals("^") || parsingPop.equals("-/")){ // Ignore Comment
-                            for (int i=0 ; ;i++){
+                            for (int i=0 ;;i++){
                                 if (inputPop.equals("^") || inputPop.equals("-/"))
                                     break;
                                     inputPop = inputStack.pop(); 
                          }
                         }
-                        else if(parsingPop.equals("id")){
+                        else if(parsingPop.equals("intConstant")){
                             if(StringHandler.isNumber(inputPop))
                             inputPop = "intConstant";
+                        }else if(parsingPop.equals("charConstant")){
+                            inputPop = "charConstant";
                         }
                     }
                     if (inputPop.equals(parsingPop))

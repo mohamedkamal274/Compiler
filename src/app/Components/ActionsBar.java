@@ -131,18 +131,7 @@ public class ActionsBar {
             errorCount = (int) lexemes.stream().filter(lexeme -> !lexeme.getMatched()).count();
         }
 
-        ResultsView.getInstance().setData(scannerColumns.getScannerColumns(),
-                lexemes
-                        .parallelStream()
-                        .filter(lexeme -> !lexeme.getToken().equals("White Space"))
-                        .map(lexeme -> {
-                            if (lexeme.getToken().equals("comment")) {
-                                lexeme.setLexeme(lexeme.getLexeme().substring(0, 2));
-                            }
-                            return lexeme;
-                        })
-                        .collect(Collectors.toList())
-        );
+        ResultsView.getInstance().setData(scannerColumns.getScannerColumns(),new ArrayList(lexemes));
 
         ResultsView.getInstance().setNumberOfErrors(errorCount);
         SuggestionList.getInstance().hideList();
@@ -163,7 +152,20 @@ public class ActionsBar {
                 .collect(Collectors.toList()));
         String program = "";
         for (int i = 0; i < AllLexme.size(); i++) {
+            if(AllLexme.get(i).getToken().equals("String")){
+                String lex=AllLexme.get(i).getLexeme();
+                String removeQuate="";
+                for(int j=1;j<lex.length()-1;j++){
+                    removeQuate+=lex.charAt(j);
+                }
+                program += removeQuate + " ";
+                
+            }else if(AllLexme.get(i).getToken().equals("charConstant")){
+                program += "charConstant"+ " ";
+            }else {           
             program += AllLexme.get(i).getLexeme() + " ";
+            
+            }
         }
         ParseTable parseObject = new ParseTable();
         //System.out.println(program);
