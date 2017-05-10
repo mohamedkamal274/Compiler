@@ -202,12 +202,12 @@ public class ParseTable {
      public stack initInputStack(stack input,String code)
      {
          input.push(":");
-         String []token=StringHandler.split(code,'~');
+       //  String []token=StringHandler.split(code,'~');
          
-         for(int i=token.length-1;i>-1;i--)
+       //  for(int i=token.length-1;i>-1;i--)
          {
                           
-             String []token2=StringHandler.split(token[i]);
+             String []token2=StringHandler.split(code);
              
              for(int k=token2.length-1;k>-1;k--)
              {
@@ -348,14 +348,20 @@ public class ParseTable {
                     if (findTerm == false && !inputPop.equals(":")) // if find ID String
                       {
                         //here if it was ID
-                        if(parsingPop.equals("Fname"))
-                                  inputPop = "STR";
+                        if(parsingPop.equals("Fname")){ 
+                           inputPop = "STR";
+                            
+                        }
+                                  
                         else if(StringHandler.isCorrectID(inputPop))
                                     inputPop = "id";
                         else if(StringHandler.isNumber(inputPop))
                             inputPop = "intConstant";
-                        else if(inputPop.charAt(0)=='\'')
-                            inputPop = "charConstant";
+                        else if(inputPop.charAt(0)=='\'' && inputPop.length()==3){
+                           if( inputPop.charAt(2)=='\'')
+                               inputPop = "charConstant";
+                        }
+                            
                     }
                     //here we replace the rule
                     rule = findRule(parsingPop,inputPop);
