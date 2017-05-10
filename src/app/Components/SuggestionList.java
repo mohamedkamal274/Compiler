@@ -41,6 +41,9 @@ public class SuggestionList {
             menuItem.setOnAction(e -> Editor.getInstance().getEditor().replaceText(EditorView.getInstance().wordStartPosition,
                     EditorView.getInstance().wordEndPosition,
                     menuItem.getText()));
+
+            if (menuItem.getText() == "No Suggestion")
+                menuItem.setDisable(true);
         }
         list.getItems().addAll(menuItems);
     }

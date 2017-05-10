@@ -41,9 +41,13 @@ public class EditorView {
                 control = (TextInputControl) e.getSource();
                 position = control.getInputMethodRequests().getTextLocation(0);
                 ArrayList<String> suggested = new ArrayList(ReservedKeywords.reservedWords.keySet().stream().filter(p -> p.toLowerCase().startsWith(selectedWord.toLowerCase()) && p.length()>2).sorted().collect(Collectors.toList()));
-                if (suggested.size()>0){
                 suggestionList.showList(editorLayout, position.getX(), position.getY());
-                suggestionList.addItemsToList(suggested);
+
+                if (suggested.size() > 0) {
+                    suggestionList.addItemsToList(suggested);
+                } else {
+                    suggested.add("No Suggestion");
+                    suggestionList.addItemsToList(suggested);
                 }
                 
             } else {
